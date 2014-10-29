@@ -1,7 +1,8 @@
 services:
   storable_forms.services.forms_registry:
-      class: ScayTrase\Forms\StorableFormsBundle\Services\StorableFormsRegistry
-      arguments: [ @service_container ]
+    class: ScayTrase\Forms\StorableFormsBundle\Services\StorableFieldsRegistry
+    tags:
+    - { name: autoregistry, tag: storable_field }
 
   form_type.storable_field:
    class: ScayTrase\Forms\StorableFormsBundle\Form\Type\FieldType
@@ -11,10 +12,12 @@ services:
 
   storable_forms.fields.simple:
       class: ScayTrase\Forms\StorableFormsBundle\Form\Fields\SimpleField
+      arguments: [@form.factory]
       tags:
-        - {'name':'storable_field'}
+        - { name : storable_field }
 
   storable_forms.fields.choice:
       class: ScayTrase\Forms\StorableFormsBundle\Form\Fields\ChoiceField
+      arguments: [@form.factory]
       tags:
-        - {'name':'storable_field'}
+        - { name : storable_field }

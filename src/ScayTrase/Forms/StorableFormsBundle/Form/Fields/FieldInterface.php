@@ -9,22 +9,22 @@
 namespace ScayTrase\Forms\StorableFormsBundle\Form\Fields;
 
 
+use ScayTrase\AutoRegistryBundle\Service\RegistryElementInterface;
 use ScayTrase\Forms\StorableFormsBundle\Entity\Field;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Test\FormBuilderInterface;
 
-interface FieldInterface {
+interface FieldInterface extends RegistryElementInterface
+{
 
     /** @return string field type */
     public function getType();
 
     /**
-     * @param FormFactoryInterface $factory
      * @param Field $field
      * @param array $form_options
      * @return FormBuilderInterface
      */
-    public function getForm(FormFactoryInterface $factory, Field $field,$form_options = array());
+    public function getForm(Field $field, $form_options = array());
 
     /**
      * @param $value mixed
@@ -46,4 +46,4 @@ interface FieldInterface {
      * @return mixed
      */
     public function convertStoredToView($value, $options = array());
-} 
+}

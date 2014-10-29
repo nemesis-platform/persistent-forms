@@ -10,7 +10,6 @@ namespace ScayTrase\Forms\StorableFormsBundle\Form\Fields;
 
 
 use ScayTrase\Forms\StorableFormsBundle\Entity\Field;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Test\FormBuilderInterface;
 
 class ChoiceField extends AbstractField
@@ -23,15 +22,13 @@ class ChoiceField extends AbstractField
     }
 
     /**
-     * @param FormFactoryInterface $factory
      * @param Field $field
-     * @param array $options
      * @param array $form_options
      * @return FormBuilderInterface
      */
-    public function getForm(FormFactoryInterface $factory, Field $field, $options = array(), $form_options = array())
+    public function getForm(Field $field, $form_options = array())
     {
-        $builder = $factory->createNamedBuilder(
+        $builder = $this->getFactory()->createNamedBuilder(
             $field->getName(),
             'choice',
             null,
@@ -51,26 +48,6 @@ class ChoiceField extends AbstractField
     /**
      * @param $value mixed
      * @param array $options
-     * @return mixed|void
-     */
-    public function convertStoredToValue($value, $options = array())
-    {
-        return $value;
-    }
-
-    /**
-     * @param $value mixed
-     * @param array $options
-     * @return mixed
-     */
-    public function convertValueToStored($value, $options = array())
-    {
-        return $value;
-    }
-
-    /**
-     * @param $value mixed
-     * @param array $options
      * @return mixed
      */
     public function convertStoredToView($value, $options = array())
@@ -80,5 +57,13 @@ class ChoiceField extends AbstractField
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'Поле с вариантами выбора';
     }
 }

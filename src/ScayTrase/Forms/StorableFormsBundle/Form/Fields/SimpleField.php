@@ -10,7 +10,6 @@ namespace ScayTrase\Forms\StorableFormsBundle\Form\Fields;
 
 
 use ScayTrase\Forms\StorableFormsBundle\Entity\Field;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Test\FormBuilderInterface;
 
 class SimpleField extends AbstractField
@@ -22,14 +21,13 @@ class SimpleField extends AbstractField
     }
 
     /**
-     * @param FormFactoryInterface $factory
      * @param Field $field
      * @param array $form_options
      * @return FormBuilderInterface
      */
-    public function getForm(FormFactoryInterface $factory, Field $field, $form_options = array())
+    public function getForm(Field $field, $form_options = array())
     {
-        return $factory->createNamedBuilder(
+        return $this->getFactory()->createNamedBuilder(
             $field->getName(),
             'text',
             null,
@@ -45,33 +43,12 @@ class SimpleField extends AbstractField
         );
     }
 
-    /**
-     * @param $value mixed
-     * @param array $options
-     * @return mixed|void
-     */
-    public function convertStoredToValue($value, $options = array())
-    {
-        return $value;
-    }
 
     /**
-     * @param $value mixed
-     * @param array $options
-     * @return mixed
+     * @return string
      */
-    public function convertValueToStored($value, $options = array())
+    public function getDescription()
     {
-        return $value;
-    }
-
-    /**
-     * @param $value mixed
-     * @param array $options
-     * @return mixed
-     */
-    public function convertStoredToView($value, $options = array())
-    {
-        return $value;
+        return 'Простое поле ввода';
     }
 }

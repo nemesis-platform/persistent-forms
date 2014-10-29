@@ -11,7 +11,6 @@ namespace ScayTrase\Forms\StorableFormsBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use ScayTrase\Forms\StorableFormsBundle\Entity\Field;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -30,7 +29,7 @@ class FormController extends Controller
 
 
     /**
-     * @Route("/api")
+     * @Route("/api/autocomplete", name="storable_forms_field_autocomplete")
      * @param Request $request
      * @return Response
      */
@@ -60,7 +59,7 @@ class FormController extends Controller
 
     /**
      * @Template()
-     * @Route("/list")
+     * @Route("/list", name="storable_forms_field_list")
      * @return Response
      */
     public function listAction()
@@ -73,7 +72,7 @@ class FormController extends Controller
     /**
      * @param Request $request
      * @param Field $field
-     * @Route("/{field}/edit")
+     * @Route("/{field}/edit", name="storable_forms_field_edit")
      * @return Response
      * @Template()
      */
@@ -93,7 +92,7 @@ class FormController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'Поле успешно сохранено');
 
             return $this->redirect(
-                $this->generateUrl('scaytrase_forms_storableforms_form_edit', array('field' => $field->getId()))
+                $this->generateUrl('storable_forms_field_edit', array('field' => $field->getId()))
             );
         }
 
@@ -102,7 +101,7 @@ class FormController extends Controller
 
     /**
      * @param Request $request
-     * @Route("/add")
+     * @Route("/create", name="storable_forms_field_create")
      * @Template()
      * @return Response
      */
@@ -124,7 +123,7 @@ class FormController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'Поле успешно сохранено');
 
             return $this->redirect(
-                $this->generateUrl('scaytrase_forms_storableforms_form_edit', array('field' => $field->getId()))
+                $this->generateUrl('storable_forms_field_edit', array('field' => $field->getId()))
             );
         }
 
@@ -134,7 +133,7 @@ class FormController extends Controller
     /**
      * @param Field $field
      * @return RedirectResponse
-     * @Route("/{field}/delete")
+     * @Route("/{field}/delete", name="storable_forms_field_delete")
      */
     public function deleteAction(Field $field){
         $this->getDoctrine()->getManager()->remove($field);
@@ -142,6 +141,6 @@ class FormController extends Controller
 
         $this->get('session')->getFlashBag()->add('success','Поле успешно удалено');
 
-        return $this->redirect($this->generateUrl('scaytrase_forms_storableforms_form_list'));
+        return $this->redirect($this->generateUrl('storable_forms_field_list'));
     }
-} 
+}

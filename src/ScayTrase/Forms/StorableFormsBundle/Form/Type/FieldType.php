@@ -9,7 +9,8 @@
 namespace ScayTrase\Forms\StorableFormsBundle\Form\Type;
 
 
-use ScayTrase\Forms\StorableFormsBundle\Services\StorableFormsRegistry;
+use ScayTrase\Forms\StorableFormsBundle\Form\Fields\FieldInterface;
+use ScayTrase\Forms\StorableFormsBundle\Services\StorableFieldsRegistry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -17,16 +18,15 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class FieldType extends AbstractType
 {
-    /** @var  StorableFormsRegistry */
+    /** @var  StorableFieldsRegistry */
     private $registry;
 
     /** @var TranslatorInterface */
     private $translator;
 
-    function __construct(StorableFormsRegistry $registry, TranslatorInterface $translator)
+    function __construct(StorableFieldsRegistry $registry)
     {
         $this->registry = $registry;
-        $this->translator = $translator;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -42,12 +42,12 @@ class FieldType extends AbstractType
                 'choice',
                 array(
                     'choices' => array_combine(
-                        $this->registry->getFieldTypes(),
+                        array_keys($this->registry->all()),
                         array_map(
-                            function ($type) use ($translator) {
-                                return $translator->trans($type);
+                            function (FieldInterface $field) use ($translator) {
+                                return $field;
                             },
-                            $this->registry->getFieldTypes()
+                            $this->registry->all()
                         )
                     ),
                     'label' => 'Тип поля'

@@ -9,15 +9,9 @@
 namespace ScayTrase\Forms\StorableFormsBundle;
 
 
-use ScayTrase\Forms\StorableFormsBundle\Services\RegistryCompilerPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class StorableFormsBundle extends Bundle{
-    public function build(ContainerBuilder $container)
-    {
-        parent::build($container);
+class StorableFormsBundle extends Bundle
+{
 
-        $container->addCompilerPass(new RegistryCompilerPass());
-    }
-} 
+}

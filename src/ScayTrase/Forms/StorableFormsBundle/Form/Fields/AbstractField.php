@@ -9,5 +9,51 @@
 namespace ScayTrase\Forms\StorableFormsBundle\Form\Fields;
 
 
-abstract class AbstractField implements FieldInterface{
+use Symfony\Component\Form\FormFactoryInterface;
+
+abstract class AbstractField implements FieldInterface
+{
+    /** @var  FormFactoryInterface */
+    private $factory;
+
+    function __construct(FormFactoryInterface $factory)
+    {
+        $this->factory = $factory;
+    }
+
+    public function getFactory()
+    {
+        return $this->factory;
+    }
+
+    /**
+     * @param $value mixed
+     * @param array $options
+     * @return mixed|void
+     */
+    public function convertStoredToValue($value, $options = array())
+    {
+        return $value;
+    }
+
+    /**
+     * @param $value mixed
+     * @param array $options
+     * @return mixed
+     */
+    public function convertValueToStored($value, $options = array())
+    {
+        return $value;
+    }
+
+    /**
+     * @param $value mixed
+     * @param array $options
+     * @return mixed
+     */
+    public function convertStoredToView($value, $options = array())
+    {
+        return $value;
+    }
+
 }

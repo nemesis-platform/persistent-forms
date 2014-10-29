@@ -21,7 +21,7 @@ class StorableFormsExtension extends Extension implements PrependExtensionInterf
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
@@ -34,9 +34,6 @@ class StorableFormsExtension extends Extension implements PrependExtensionInterf
      */
     public function prepend(ContainerBuilder $container)
     {
-        // get all bundles
-        $bundles = $container->getParameter('kernel.bundles');
-
         foreach ($container->getExtensions() as $name => $extension) {
             switch ($name) {
                 case 'twig':
