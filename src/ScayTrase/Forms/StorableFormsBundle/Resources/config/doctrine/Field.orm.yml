@@ -1,0 +1,22 @@
+ScayTrase\Forms\StorableFormsBundle\Entity\Field:
+    type: entity
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+      name:
+        type: string
+      description:
+        type: string
+        nullable: true
+      help_message:
+        type: text
+        nullable: true
+      type:
+        type: string
+      options:
+        type: json_array
+

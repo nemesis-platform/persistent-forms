@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1 class="page-header">Список полей
+        <small><a href="{{ path('scaytrase_forms_storableforms_form_create') }}"><i class="fa fa-plus"></i></a></small>
+    </h1>
+    <table class="table table-responsive table-bordered table-striped">
+        {% for field in fields %}
+            <tr>
+                <td>#{{ field.id }}</td>
+                <td>
+                    <a href="{{ path('scaytrase_forms_storableforms_form_edit',{'field':field.id}) }}">
+                        {{ field.name }}
+                    </a>
+                </td>
+                <td>{{ field.type }}</td>
+                <td><a href="{{ path('scaytrase_forms_storableforms_form_delete',{'field':field.id}) }}"><i
+                                class="fa fa-trash-o text-danger"></i></a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
