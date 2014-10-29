@@ -33,7 +33,7 @@ class FormController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function AutoCompleteAction(Request $request)
+    public function autoCompleteAction(Request $request)
     {
         if (!$request->query->get('term')) {
             return new JsonResponse(array());

@@ -14,15 +14,11 @@ use ScayTrase\Forms\StorableFormsBundle\Services\StorableFieldsRegistry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class FieldType extends AbstractType
 {
     /** @var  StorableFieldsRegistry */
     private $registry;
-
-    /** @var TranslatorInterface */
-    private $translator;
 
     function __construct(StorableFieldsRegistry $registry)
     {
@@ -31,12 +27,10 @@ class FieldType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $translator = $this->translator;
-
         $builder
             ->add('name', 'text', array('label' => 'Код поля'))
             ->add('description', 'text', array('label' => 'Описание'))
-            ->add('help_message', 'textarea', array('label' => 'Подсказка','required'=>false))
+            ->add('help_message', 'textarea', array('label' => 'Подсказка', 'required' => false))
             ->add(
                 'type',
                 'choice',
@@ -44,7 +38,7 @@ class FieldType extends AbstractType
                     'choices' => array_combine(
                         array_keys($this->registry->all()),
                         array_map(
-                            function (FieldInterface $field) use ($translator) {
+                            function (FieldInterface $field) {
                                 return $field;
                             },
                             $this->registry->all()
