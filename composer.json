@@ -17,6 +17,9 @@
         "sensio/framework-extra-bundle": "~3.0",
         "scaytrase/symfony-autoregistry": "~1.0"
     },
+    "require-dev":{
+        "scaytrase/symfony-test-utils":"dev-master"
+    },
     "autoload": {
         "psr-0": {
             "": "src/"
