@@ -9,7 +9,6 @@
 namespace ScayTrase\Forms\StorableFormsBundle\Form\Type;
 
 
-use ScayTrase\Forms\StorableFormsBundle\Form\Fields\FieldInterface;
 use ScayTrase\Forms\StorableFormsBundle\Services\StorableFieldsRegistry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,6 +26,11 @@ class FieldType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $fields = array();
+        foreach ($this->registry->all() as $field) {
+            $fields[$field->getType()] = $field->getDescription();
+        }
+
         $builder
             ->add('name', 'text', array('label' => 'Код поля'))
             ->add('description', 'text', array('label' => 'Описание'))
@@ -35,15 +39,7 @@ class FieldType extends AbstractType
                 'type',
                 'choice',
                 array(
-                    'choices' => array_combine(
-                        array_keys($this->registry->all()),
-                        array_map(
-                            function (FieldInterface $field) {
-                                return $field;
-                            },
-                            $this->registry->all()
-                        )
-                    ),
+                    'choices' => $fields,
                     'label' => 'Тип поля'
                 )
             )
