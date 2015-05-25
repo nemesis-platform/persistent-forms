@@ -15,7 +15,7 @@
         "scaytrase/symfony-form-extensions": "~2.0",
         "doctrine/orm": "~2.2,>=2.2.3",
         "sensio/framework-extra-bundle": "~3.0",
-        "scaytrase/symfony-autoregistry": "~1.0"
+        "scaytrase/symfony-autoregistry": "dev-master"
     },
     "autoload": {
         "psr-0": {

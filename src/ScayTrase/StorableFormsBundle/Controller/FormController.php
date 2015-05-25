@@ -6,11 +6,11 @@
  * Time: 17:04
  */
 
-namespace ScayTrase\Forms\StorableFormsBundle\Controller;
+namespace ScayTrase\StorableFormsBundle\Controller;
 
 
 use Doctrine\ORM\EntityManager;
-use ScayTrase\Forms\StorableFormsBundle\Entity\Field;
+use ScayTrase\StorableFormsBundle\Entity\AbstractField;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,7 +21,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FormController
- * @package ScayTrase\Forms\StorableFormsBundle\Controller
+ *
+ * @package ScayTrase\StorableFormsBundle\Controller
  * @Route("/fields")
  */
 class FormController extends Controller
@@ -31,6 +32,7 @@ class FormController extends Controller
     /**
      * @Route("/api/autocomplete", name="storable_forms_field_autocomplete")
      * @param Request $request
+     *
      * @return Response
      */
     public function autoCompleteAction(Request $request)
@@ -39,14 +41,18 @@ class FormController extends Controller
             return new JsonResponse(array());
         }
 
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->getRepository('StorableFormsBundle:Field')->createQueryBuilder('f')
-            ->select('f')->where('f.name like :term')->setParameter('term', '%' . $request->query->get('term') . '%');
+        /** @var EntityManager $manager */
+        $manager = $this->getDoctrine()->getManager();
+        $query   = $manager->getRepository('StorableFormsBundle:AbstractField')->createQueryBuilder('f')
+                           ->select('f')
+                           ->orWhere('f.name like :term')
+                           ->orWhere('f.title like :term')
+                           ->orWhere('f.help_message like :term')
+                           ->setParameter('term', '%'.$request->query->get('term').'%');
 
         return new JsonResponse(
             array_map(
-                function (Field $field) {
+                function (AbstractField $field) {
                     return array(
                         'label' => $field->getName(),
                         'id' => $field->getID(),
@@ -64,29 +70,27 @@ class FormController extends Controller
      */
     public function listAction()
     {
-        $fields = $this->getDoctrine()->getRepository('StorableFormsBundle:Field')->findAll();
+        $fields = $this->getDoctrine()->getRepository('StorableFormsBundle:AbstractField')->findAll();
 
         return array('fields' => $fields);
     }
 
     /**
-     * @param Request $request
-     * @param Field $field
+     * @param Request       $request
+     * @param AbstractField $field
      * @Route("/{field}/edit", name="storable_forms_field_edit")
+     *
      * @return Response
      * @Template()
      */
-    public function editAction(Request $request, Field $field)
+    public function editAction(Request $request, AbstractField $field)
     {
         $form = $this->createForm('storable_field', $field)
             ->add('submit', 'submit', array('label' => 'Обновить'));
 
-
         $form->handleRequest($request);
 
-
         if ($form->isValid()) {
-            $this->getDoctrine()->getManager()->persist($field);
             $this->getDoctrine()->getManager()->flush();
 
             $this->get('session')->getFlashBag()->add('success', 'Поле успешно сохранено');
@@ -103,11 +107,11 @@ class FormController extends Controller
      * @param Request $request
      * @Route("/create", name="storable_forms_field_create")
      * @Template()
+     *
      * @return Response
      */
     public function createAction(Request $request)
     {
-
         $form = $this->createForm('storable_field')
             ->add('submit', 'submit', array('label' => 'Сохранить'));
 
@@ -131,15 +135,17 @@ class FormController extends Controller
     }
 
     /**
-     * @param Field $field
+     * @param AbstractField $field
+     *
      * @return RedirectResponse
      * @Route("/{field}/delete", name="storable_forms_field_delete")
      */
-    public function deleteAction(Field $field){
+    public function deleteAction(AbstractField $field)
+    {
         $this->getDoctrine()->getManager()->remove($field);
         $this->getDoctrine()->getManager()->flush();
 
-        $this->get('session')->getFlashBag()->add('success','Поле успешно удалено');
+        $this->get('session')->getFlashBag()->add('success', 'Поле успешно удалено');
 
         return $this->redirect($this->generateUrl('storable_forms_field_list'));
     }

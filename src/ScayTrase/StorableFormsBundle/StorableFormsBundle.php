@@ -6,7 +6,7 @@
  * Time: 13:33
  */
 
-namespace ScayTrase\Forms\StorableFormsBundle;
+namespace ScayTrase\StorableFormsBundle;
 
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
