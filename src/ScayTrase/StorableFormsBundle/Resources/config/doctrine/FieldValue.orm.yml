@@ -1,4 +1,4 @@
-ScayTrase\Forms\StorableFormsBundle\Entity\FieldValue:
+ScayTrase\StorableFormsBundle\Entity\FieldValue:
     type: entity
     id:
         id:
@@ -8,10 +8,10 @@ ScayTrase\Forms\StorableFormsBundle\Entity\FieldValue:
                 strategy: IDENTITY
     fields:
         value:
-          type: string
-          length: 2048
+          type: text
+          nullabel: true
     manyToOne:
         field:
-          targetEntity: Field
+          targetEntity: AbstractField
           joinColumn:
             name: type

@@ -1,6 +1,6 @@
 <?php
 
-namespace ScayTrase\Forms\StorableFormsBundle\DependencyInjection;
+namespace ScayTrase\StorableFormsBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,10 +20,8 @@ class StorableFormsExtension extends Extension implements PrependExtensionInterf
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
-        $this->processConfiguration($configuration, $configs);
-
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('form_types.yml');
         $loader->load('services.yml');
     }
 
@@ -41,8 +39,8 @@ class StorableFormsExtension extends Extension implements PrependExtensionInterf
                         $name,
                         array(
                             'globals' => array(
-                                'field_registry' => '@storable_forms.services.forms_registry',
-                            )
+                                'field_registry' => '@scaytrase.storable_forms.fields_registry',
+                            ),
                         )
                     );
                     break;

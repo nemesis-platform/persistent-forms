@@ -6,14 +6,14 @@
  * Time: 13:59
  */
 
-namespace ScayTrase\Forms\StorableFormsBundle\Entity;
+namespace ScayTrase\StorableFormsBundle\Entity;
 
 
 class FieldValue
 {
     /** @var  int|null */
     private $id;
-    /** @var  Field */
+    /** @var  AbstractField */
     private $field;
     /** @var  mixed */
     private $value;
@@ -27,7 +27,7 @@ class FieldValue
     }
 
     /**
-     * @return Field
+     * @return AbstractField
      */
     public function getField()
     {
@@ -35,7 +35,7 @@ class FieldValue
     }
 
     /**
-     * @param Field $field
+     * @param AbstractField $field
      */
     public function setField($field)
     {
