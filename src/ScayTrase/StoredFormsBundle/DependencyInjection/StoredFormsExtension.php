@@ -39,7 +39,7 @@ class StoredFormsExtension extends Extension implements PrependExtensionInterfac
                         $name,
                         array(
                             'globals' => array(
-                                'field_registry' => '@scaytrase.storable_forms.fields_registry',
+                                'field_registry' => '@scaytrase.stored_forms.fields_registry',
                             ),
                         )
                     );
