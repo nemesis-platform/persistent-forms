@@ -1,0 +1,7 @@
+ScayTrase\StoredFormsBundle\Entity\Field\Type\TextareaField:
+  type: entity
+  fields:
+    textValue:
+      type: text
+
+

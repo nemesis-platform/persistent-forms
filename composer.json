@@ -11,10 +11,8 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "~2.4",
-        "scaytrase/symfony-form-extensions": "~2.0",
+        "symfony/form": "~2.4",
         "doctrine/orm": "~2.2,>=2.2.3",
-        "sensio/framework-extra-bundle": "~3.0",
         "scaytrase/symfony-autoregistry": "dev-master"
     },
     "autoload": {
