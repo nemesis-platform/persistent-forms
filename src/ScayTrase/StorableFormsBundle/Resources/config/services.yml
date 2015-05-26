@@ -1,5 +1,0 @@
-services:
-  scaytrase.storable_forms.fields_registry:
-    class: ScayTrase\StorableFormsBundle\Registry\FieldsRegistry
-    tags:
-    - { name: autoregistry, tag: storable_field }
