@@ -15,7 +15,7 @@ Here is the attempt to reinvent the wheel on top of the Symfony2 Form components
 The best way to install this bundle is to use composer
 
 ```bash
-    composer require "scaytrase/symfony-storable-forms:~3.0"
+    composer require "scaytrase/symfony-stored-forms-bundle:~3.0"
 ```
 
 And include the bundle into the list of application bundles
