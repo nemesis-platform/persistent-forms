@@ -24,7 +24,9 @@ class ChoiceValue extends PlainValue
             throw new \LogicException('Choice answer belongs to non-choice field');
         }
 
-        return $field->getChoices()[$this->getValue()];
+        $choices = $field->getChoices();
+
+        return $choices[$this->getValue()];
     }
 
 }
