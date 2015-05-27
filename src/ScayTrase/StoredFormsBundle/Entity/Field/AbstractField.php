@@ -70,7 +70,7 @@ abstract class AbstractField implements TypedObjectInterface, FormTypedInterface
                 'label'      => $this->getTitle(),
                 'attr'       => array('help_text' => $this->getHelpMessage()),
                 'field_type' => $this,
-                'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Value\AbstractValue'
+                'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue'
             ),
             $this->getRenderedFormOptions()
         );
