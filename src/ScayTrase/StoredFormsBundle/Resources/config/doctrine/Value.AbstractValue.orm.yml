@@ -9,6 +9,6 @@ ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue:
                 strategy: IDENTITY
     manyToOne:
         field:
-          targetEntity: AbstractField
+          targetEntity: ScayTrase\StoredFormsBundle\Entity\Field\AbstractField
           joinColumn:
             name: type
