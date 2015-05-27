@@ -9,7 +9,10 @@
 namespace ScayTrase\StoredFormsBundle\Entity\Field\Type;
 
 use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
+use ScayTrase\StoredFormsBundle\Entity\Value\Type\ChoiceValue;
+use ScayTrase\StoredFormsBundle\Form\Transformer\ValueTransformer;
 use ScayTrase\StoredFormsBundle\Form\Type\ChoiceFieldType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
 class ChoiceField extends AbstractField
@@ -62,10 +65,20 @@ class ChoiceField extends AbstractField
      */
     protected function getRenderedFormOptions()
     {
-        return array(
-            'property_path' => 'value',
-            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Value\Type\ChoiceValue',
-            'choices' => $this->choices
+        return array_replace_recursive(
+            parent::getRenderedFormOptions(),
+            array(
+                'choices' => $this->choices
+            )
         );
+
+    }
+
+    /**
+     * @return DataTransformerInterface
+     */
+    protected function getValueTransformer()
+    {
+        return new ValueTransformer(new ChoiceValue(), 'value');
     }
 }

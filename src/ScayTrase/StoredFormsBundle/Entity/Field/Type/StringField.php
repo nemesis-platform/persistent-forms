@@ -37,15 +37,4 @@ class StringField extends AbstractField
     {
         return 'text';
     }
-
-    /**
-     * @return array
-     */
-    protected function getRenderedFormOptions()
-    {
-        return array(
-            'property_path' => 'value',
-            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Value\Type\PlainValue'
-        );
-    }
 }

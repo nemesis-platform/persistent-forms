@@ -10,6 +10,7 @@ namespace ScayTrase\StoredFormsBundle\Entity\Field\Type;
 
 
 use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
+use ScayTrase\StoredFormsBundle\Form\Transformer\ValueTransformer;
 use Symfony\Component\Form\ChoiceList\ChoiceListInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
@@ -29,7 +30,6 @@ abstract class AbstractDecoratedEntitySetField extends AbstractField
     protected function getRenderedFormOptions()
     {
         return array(
-            'data_class'  => 'ScayTrase\StoredFormsBundle\Entity\Value\Type\AbstractDecoratedEntityValue',
             'choice_list' => $this->getChoiceList()
         );
     }
