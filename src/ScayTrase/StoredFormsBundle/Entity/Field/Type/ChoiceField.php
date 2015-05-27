@@ -49,7 +49,7 @@ class ChoiceField extends AbstractField
      */
     public function getFormType()
     {
-        return new ChoiceFieldType(get_class());
+        return new ChoiceFieldType(get_class($this));
     }
 
     /**
@@ -79,6 +79,9 @@ class ChoiceField extends AbstractField
      */
     protected function getValueTransformer()
     {
-        return new ValueTransformer(new ChoiceValue(), 'value');
+        $value = new ChoiceValue();
+        $value->setField($this);
+
+        return new ValueTransformer($value, 'value');
     }
 }
