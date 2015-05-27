@@ -1,7 +1,2 @@
-ScayTrase\StoredFormsBundle\Entity\Field\Type\TextareaField:
+ScayTrase\StoredFormsBundle\Entity\Field\Type\TextAreaField:
   type: entity
-  fields:
-    textValue:
-      type: text
-
-
