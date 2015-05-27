@@ -1,4 +1,4 @@
-ScayTrase\StoredFormsBundle\Entity\Field\Value\AbstractValue:
+ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue:
     type: entity
     inheritanceType: SINGLE_TABLE
     id:

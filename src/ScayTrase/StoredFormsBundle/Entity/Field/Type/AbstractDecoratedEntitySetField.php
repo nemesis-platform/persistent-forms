@@ -29,7 +29,7 @@ abstract class AbstractDecoratedEntitySetField extends AbstractField
     protected function getRenderedFormOptions()
     {
         return array(
-            'data_class'  => 'ScayTrase\StoredFormsBundle\Entity\Field\Value\Type\AbstractDecoratedEntityValue',
+            'data_class'  => 'ScayTrase\StoredFormsBundle\Entity\Value\Type\AbstractDecoratedEntityValue',
             'choice_list' => $this->getChoiceList()
         );
     }

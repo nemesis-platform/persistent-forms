@@ -64,7 +64,7 @@ class ChoiceField extends AbstractField
     {
         return array(
             'property_path' => 'value',
-            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Value\Type\ChoiceValue',
+            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Value\Type\ChoiceValue',
             'choices' => $this->choices
         );
     }

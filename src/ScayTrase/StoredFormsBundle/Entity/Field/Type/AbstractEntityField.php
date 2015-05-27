@@ -32,7 +32,7 @@ abstract class AbstractEntityField extends AbstractField
     protected function getRenderedFormOptions()
     {
         return array(
-            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Value\Type\AbstractEntityValue',
+            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Value\Type\AbstractEntityValue',
             'class' => $this->getClassname()
         );
     }
