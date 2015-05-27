@@ -4,7 +4,7 @@ namespace ScayTrase\StoredFormsBundle\Form\Transformer;
 
 use ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * Created by PhpStorm.
@@ -34,13 +34,23 @@ class ValueTransformer implements DataTransformerInterface
     /** @inheritdoc */
     public function transform($value)
     {
-        // TODO: Implement transform() method.
+        if (!($value instanceof AbstractValue)) {
+            return null;
+        }
+
+        $accessor = new PropertyAccessor();
+
+        return $accessor->getValue($value, $this->propertyPath);
     }
 
     /** @inheritdoc */
     public function reverseTransform($value)
     {
-        // TODO: Implement reverseTransform() method.
+        $accessor = new PropertyAccessor();
+        $accessor->setValue($this->value, $this->propertyPath, $value);
+
+        return $this->value;
+
     }
 
 }

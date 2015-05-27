@@ -70,8 +70,8 @@ abstract class AbstractField implements TypedObjectInterface, FormTypedInterface
     {
         $options = array_replace_recursive(
             array(
-                'label'      => $this->getTitle(),
-                'attr'       => array('help_text' => $this->getHelpMessage()),
+                'label' => $this->getTitle(),
+                'attr'  => array('help_text' => $this->getHelpMessage()),
             ),
             $this->getRenderedFormOptions(),
             $options
@@ -130,7 +130,10 @@ abstract class AbstractField implements TypedObjectInterface, FormTypedInterface
     /**
      * @return string|FormTypeInterface
      */
-    abstract protected function getRenderedFormType();
+    protected function getRenderedFormType()
+    {
+        return array();
+    }
 
 
     /**
