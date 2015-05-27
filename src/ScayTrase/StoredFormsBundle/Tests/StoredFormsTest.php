@@ -58,12 +58,14 @@ class StoredFormsTest extends TypeTestCase
             $form->get('string_type')->getData()
         );
         $this->assertEquals('the string to test', $form->get('string_type')->getData()->getValue());
+        $this->assertEquals($string, $form->get('string_type')->getData()->getField());
 
         $this->assertInstanceOf(
             'ScayTrase\StoredFormsBundle\Entity\Value\Type\TextValue',
             $form->get('text_type')->getData()
         );
         $this->assertEquals('Some text goes here', $form->get('text_type')->getData()->getValue());
+        $this->assertEquals($text, $form->get('text_type')->getData()->getField());
 
         $this->assertInstanceOf(
             'ScayTrase\StoredFormsBundle\Entity\Value\Type\PlainValue',
@@ -71,6 +73,7 @@ class StoredFormsTest extends TypeTestCase
         );
         $this->assertEquals(1, $form->get('number_type')->getData()->getValue());
         $this->assertTrue(1.0 === $form->get('number_type')->getData()->getValue());
+        $this->assertEquals($number, $form->get('number_type')->getData()->getField());
 
         $this->assertInstanceOf(
             'ScayTrase\StoredFormsBundle\Entity\Value\Type\PlainValue',
@@ -79,5 +82,6 @@ class StoredFormsTest extends TypeTestCase
 
         $this->assertEquals(0, $form->get('choice_type')->getData()->getValue());
         $this->assertEquals('choice1', $form->get('choice_type')->getData()->getRenderValue());
+        $this->assertEquals($choice, $form->get('choice_type')->getData()->getField());
     }
 }
