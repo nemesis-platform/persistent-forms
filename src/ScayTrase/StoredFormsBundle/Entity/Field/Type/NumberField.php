@@ -37,15 +37,4 @@ class NumberField extends AbstractField
     {
         return 'number';
     }
-
-    /**
-     * @return array
-     */
-    protected function getRenderedFormOptions()
-    {
-        return array(
-            'property_path' => 'value',
-            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Value\Type\PlainValue'
-        );
-    }
 }

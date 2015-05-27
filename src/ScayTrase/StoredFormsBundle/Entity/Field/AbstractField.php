@@ -11,7 +11,10 @@ namespace ScayTrase\StoredFormsBundle\Entity\Field;
 
 use ScayTrase\Core\Form\FormTypedInterface;
 use ScayTrase\Core\Registry\TypedObjectInterface;
+use ScayTrase\StoredFormsBundle\Entity\Value\Type\PlainValue;
 use ScayTrase\StoredFormsBundle\Form\AbstractFieldType;
+use ScayTrase\StoredFormsBundle\Form\Transformer\ValueTransformer;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
@@ -63,19 +66,24 @@ abstract class AbstractField implements TypedObjectInterface, FormTypedInterface
         return new AbstractFieldType(get_class($this));
     }
 
-    public function buildForm(FormBuilderInterface $builder)
+    public function buildForm(FormBuilderInterface $builder, array $options = array())
     {
         $options = array_replace_recursive(
             array(
                 'label'      => $this->getTitle(),
                 'attr'       => array('help_text' => $this->getHelpMessage()),
-                'field_type' => $this,
-                'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue'
             ),
-            $this->getRenderedFormOptions()
+            $this->getRenderedFormOptions(),
+            $options
         );
 
-        $builder->add($this->name, $this->getRenderedFormType(), $options);
+        $field = $builder->create($this->name, $this->getRenderedFormType(), $options);
+
+        if ($this->getValueTransformer()) {
+            $field->addModelTransformer($this->getValueTransformer());
+        }
+
+        $builder->add($field);
     }
 
     /**
@@ -95,16 +103,16 @@ abstract class AbstractField implements TypedObjectInterface, FormTypedInterface
     }
 
     /**
-     * @return FormTypeInterface|string
-     */
-
-    /**
      * @return string
      */
     public function getHelpMessage()
     {
         return $this->help_message;
     }
+
+    /**
+     * @return FormTypeInterface|string
+     */
 
     /**
      * @param string $help
@@ -123,4 +131,13 @@ abstract class AbstractField implements TypedObjectInterface, FormTypedInterface
      * @return string|FormTypeInterface
      */
     abstract protected function getRenderedFormType();
+
+
+    /**
+     * @return DataTransformerInterface
+     */
+    protected function getValueTransformer()
+    {
+        return new ValueTransformer(new PlainValue(), 'value');
+    }
 }

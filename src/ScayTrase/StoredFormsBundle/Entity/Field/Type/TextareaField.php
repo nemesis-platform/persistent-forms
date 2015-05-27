@@ -10,6 +10,9 @@ namespace ScayTrase\StoredFormsBundle\Entity\Field\Type;
 
 
 use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
+use ScayTrase\StoredFormsBundle\Entity\Value\Type\TextValue;
+use ScayTrase\StoredFormsBundle\Form\Transformer\ValueTransformer;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
 class TextAreaField extends AbstractField
@@ -40,13 +43,10 @@ class TextAreaField extends AbstractField
     }
 
     /**
-     * @return array
+     * @return DataTransformerInterface
      */
-    protected function getRenderedFormOptions()
+    protected function getValueTransformer()
     {
-        return array(
-            'property_path' => 'value',
-            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Value\Type\TextValue'
-        );
+        return new ValueTransformer(new TextValue(), 'textValue');
     }
 }

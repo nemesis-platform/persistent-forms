@@ -23,18 +23,7 @@ abstract class AbstractEntityField extends AbstractField
 
     public function getFormType()
     {
-        return new AbstractEntityFieldType(get_class());
-    }
-
-    /**
-     * @return array
-     */
-    protected function getRenderedFormOptions()
-    {
-        return array(
-            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Value\Type\AbstractEntityValue',
-            'class' => $this->getClassname()
-        );
+        return new AbstractEntityFieldType(get_class($this));
     }
 
     /**
