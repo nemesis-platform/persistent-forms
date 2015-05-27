@@ -36,7 +36,7 @@ class FieldsRegistry implements RegistryInterface
      */
     public function offsetSet($offset, $value)
     {
-        $this->types = $value;
+        $this->types[$offset] = $value;
     }
 
     /**
@@ -44,7 +44,7 @@ class FieldsRegistry implements RegistryInterface
      */
     public function offsetUnset($offset)
     {
-        unset($this->types);
+        unset($this->types[$offset]);
     }
 
     /**
@@ -54,7 +54,7 @@ class FieldsRegistry implements RegistryInterface
      */
     public function get($type)
     {
-        return $this[$type];
+        return $this->types[$type];
     }
 
     /**
@@ -64,7 +64,7 @@ class FieldsRegistry implements RegistryInterface
      */
     public function has($type)
     {
-        return array_key_exists($type,$this->types);
+        return array_key_exists($type, $this->types);
     }
 
     /**
@@ -80,7 +80,7 @@ class FieldsRegistry implements RegistryInterface
      */
     public function replace(TypedObjectInterface $object)
     {
-        $this[$object->getType()] = $object;
+        $this->types[$object->getType()] = $object;
     }
 
     /**
@@ -89,7 +89,7 @@ class FieldsRegistry implements RegistryInterface
     public function add(TypedObjectInterface $object)
     {
         if (!array_key_exists($object->getType(), $this->types)) {
-            $this[$object->getType()] = $object;
+            $this->types[$object->getType()] = $object;
         }
     }
 
@@ -98,7 +98,7 @@ class FieldsRegistry implements RegistryInterface
      */
     public function remove($type)
     {
-        unset($this[$type]);
+        unset($this->types[$type]);
     }
 
     /**
@@ -106,7 +106,7 @@ class FieldsRegistry implements RegistryInterface
      */
     public function removeElement(TypedObjectInterface $object)
     {
-        unset($this[$object->getType()]);
+        unset($this->types[$object->getType()]);
     }
 
     /**
