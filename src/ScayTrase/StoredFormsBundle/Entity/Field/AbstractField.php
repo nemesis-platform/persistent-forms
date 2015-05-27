@@ -141,6 +141,9 @@ abstract class AbstractField implements TypedObjectInterface, FormTypedInterface
      */
     protected function getValueTransformer()
     {
-        return new ValueTransformer(new PlainValue(), 'value');
+        $value = new PlainValue();
+        $value->setField($this);
+
+        return new ValueTransformer($value, 'value');
     }
 }

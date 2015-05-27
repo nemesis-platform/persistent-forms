@@ -47,6 +47,9 @@ class TextAreaField extends AbstractField
      */
     protected function getValueTransformer()
     {
-        return new ValueTransformer(new TextValue(), 'textValue');
+        $value = new TextValue();
+        $value->setField($this);
+
+        return new ValueTransformer($value, 'textValue');
     }
 }
