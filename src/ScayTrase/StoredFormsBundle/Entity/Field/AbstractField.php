@@ -125,15 +125,15 @@ abstract class AbstractField implements TypedObjectInterface, FormTypedInterface
     /**
      * @return array
      */
-    abstract protected function getRenderedFormOptions();
+    protected function getRenderedFormOptions()
+    {
+        return array();
+    }
 
     /**
      * @return string|FormTypeInterface
      */
-    protected function getRenderedFormType()
-    {
-        return array();
-    }
+    abstract protected function getRenderedFormType();
 
 
     /**
