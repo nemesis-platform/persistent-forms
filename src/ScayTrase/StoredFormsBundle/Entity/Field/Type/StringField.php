@@ -37,4 +37,12 @@ class StringField extends AbstractField
     {
         return 'text';
     }
+
+    /**
+     * @return array
+     */
+    protected function getRenderedFormOptions()
+    {
+        return array();
+    }
 }

@@ -49,4 +49,12 @@ class TextAreaField extends AbstractField
     {
         return new ValueTransformer(new TextValue(), 'textValue');
     }
+
+    /**
+     * @return array
+     */
+    protected function getRenderedFormOptions()
+    {
+        return array();
+    }
 }

@@ -37,4 +37,13 @@ class NumberField extends AbstractField
     {
         return 'number';
     }
+
+
+    /**
+     * @return array
+     */
+    protected function getRenderedFormOptions()
+    {
+        return array();
+    }
 }
