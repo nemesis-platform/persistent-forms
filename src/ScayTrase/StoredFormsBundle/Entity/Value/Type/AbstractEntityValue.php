@@ -9,7 +9,7 @@
 namespace ScayTrase\StoredFormsBundle\Entity\Value\Type;
 
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\AbstractEntityField;
-use ScayTrase\StoredFormsBundle\Entity\Field\Value\AbstractValue;
+use ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue;
 
 abstract class AbstractEntityValue extends AbstractValue
 {

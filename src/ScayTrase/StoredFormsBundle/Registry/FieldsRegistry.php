@@ -64,7 +64,7 @@ class FieldsRegistry implements RegistryInterface
      */
     public function has($type)
     {
-        return isset($this[$type]);
+        return array_key_exists($type,$this->types);
     }
 
     /**

@@ -9,7 +9,7 @@
 namespace ScayTrase\StoredFormsBundle\Entity\Value\Type;
 
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\AbstractDecoratedEntitySetField;
-use ScayTrase\StoredFormsBundle\Entity\Field\Value\AbstractValue;
+use ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue;
 
 abstract class AbstractDecoratedEntityValue extends AbstractValue
 {
@@ -22,12 +22,10 @@ abstract class AbstractDecoratedEntityValue extends AbstractValue
             throw new \LogicException('Entity-set answer belongs to non-entity-set field');
         }
 
-        foreach ($field->getEntities() as $element) {
-            if ($this->getValue() === $element['entity']) {
-                return $element['label'];
-            }
-        }
+        $list = $field->getChoiceList();
 
-        return null;
+        $values = $list->getValuesForChoices($this->getValue());
+
+        return (count($values) > 0) ? $values[0] : null;
     }
 }
