@@ -46,7 +46,7 @@ class TextAreaField extends AbstractField
     {
         return array(
             'property_path' => 'value',
-            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Value\Type\TextValue',
+            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Value\Type\TextValue'
         );
     }
 }

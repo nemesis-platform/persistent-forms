@@ -8,7 +8,7 @@
 
 namespace ScayTrase\StoredFormsBundle\Entity\Value\Type;
 
-use ScayTrase\StoredFormsBundle\Entity\Field\Value\AbstractValue;
+use ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue;
 
 class TextValue extends AbstractValue
 {

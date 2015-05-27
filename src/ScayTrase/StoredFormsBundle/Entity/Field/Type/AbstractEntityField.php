@@ -33,7 +33,7 @@ abstract class AbstractEntityField extends AbstractField
     {
         return array(
             'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Value\Type\AbstractEntityValue',
-            'class' => $this->getClassname(),
+            'class' => $this->getClassname()
         );
     }
 

@@ -45,7 +45,7 @@ class NumberField extends AbstractField
     {
         return array(
             'property_path' => 'value',
-            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Value\Type\PlainValue',
+            'data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Value\Type\PlainValue'
         );
     }
 }

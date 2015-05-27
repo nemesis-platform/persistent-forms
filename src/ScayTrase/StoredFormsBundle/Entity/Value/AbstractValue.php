@@ -6,7 +6,7 @@
  * Time: 13:59
  */
 
-namespace ScayTrase\StoredFormsBundle\Entity\Field\Value;
+namespace ScayTrase\StoredFormsBundle\Entity\Value;
 
 
 use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
