@@ -8,7 +8,6 @@
 
 namespace ScayTrase\StoredFormsBundle\Form\Type;
 
-use ScayTrase\StoredFormsBundle\Form\AbstractFieldType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ChoiceFieldType extends AbstractFieldType

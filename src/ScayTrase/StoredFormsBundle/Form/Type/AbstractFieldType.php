@@ -6,7 +6,7 @@
  * Time: 17:57
  */
 
-namespace ScayTrase\StoredFormsBundle\Form;
+namespace ScayTrase\StoredFormsBundle\Form\Type;
 
 
 use Symfony\Component\Form\AbstractType;
