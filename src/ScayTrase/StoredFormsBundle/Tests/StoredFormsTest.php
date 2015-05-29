@@ -52,7 +52,7 @@ class StoredFormsTest extends TypeTestCase
             'text_type'            => 'Some text goes here',
             'number_type'          => 1,
             'choice_type'          => 0,
-            'multiple_choice_type' => [0, 2]
+            'multiple_choice_type' => array(0, 2)
         );
 
         $form = $builder->getForm();
