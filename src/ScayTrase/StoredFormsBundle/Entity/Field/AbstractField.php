@@ -28,6 +28,8 @@ abstract class AbstractField implements TypedObjectInterface, FormTypedInterface
     private $title;
     /** @var  string */
     private $help_message;
+    /** @var  bool */
+    private $required = true;
 
     /**
      * @return int|null
@@ -70,8 +72,9 @@ abstract class AbstractField implements TypedObjectInterface, FormTypedInterface
     {
         $options = array_replace_recursive(
             array(
-                'label' => $this->getTitle(),
-                'attr'  => array('help_text' => $this->getHelpMessage()),
+                'required' => $this->isRequired(),
+                'label'    => $this->getTitle(),
+                'attr'     => array('help_text' => $this->getHelpMessage()),
             ),
             $this->getRenderedFormOptions(),
             $options
@@ -84,6 +87,22 @@ abstract class AbstractField implements TypedObjectInterface, FormTypedInterface
         }
 
         $builder->add($field);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRequired()
+    {
+        return $this->required;
+    }
+
+    /**
+     * @param boolean $required
+     */
+    public function setRequired($required)
+    {
+        $this->required = $required;
     }
 
     /**

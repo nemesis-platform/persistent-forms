@@ -19,6 +19,42 @@ class ChoiceField extends AbstractField
 {
     /** @var  array */
     private $choices;
+    /** @var bool */
+    private $expanded = false;
+    /** @var bool */
+    private $multiple = false;
+
+    /**
+     * @return boolean
+     */
+    public function isExpanded()
+    {
+        return $this->expanded;
+    }
+
+    /**
+     * @param boolean $expanded
+     */
+    public function setExpanded($expanded)
+    {
+        $this->expanded = $expanded;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isMultiple()
+    {
+        return $this->multiple;
+    }
+
+    /**
+     * @param boolean $multiple
+     */
+    public function setMultiple($multiple)
+    {
+        $this->multiple = $multiple;
+    }
 
     /**
      * @return string Name key for the object
@@ -68,7 +104,9 @@ class ChoiceField extends AbstractField
         return array_replace_recursive(
             parent::getRenderedFormOptions(),
             array(
-                'choices' => $this->choices
+                'choices' => $this->choices,
+                'expanded' => $this->expanded,
+                'multiple' => $this->multiple
             )
         );
 

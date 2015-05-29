@@ -13,15 +13,6 @@ use Symfony\Component\Form\FormTypeInterface;
 
 class NumberField extends AbstractField
 {
-
-    /**
-     * @return FormTypeInterface|string FormTypeInterface instance or string which represents registered form type
-     */
-    public function getFormType()
-    {
-        return 'number';
-    }
-
     /**
      * @return string Name key for the object
      */

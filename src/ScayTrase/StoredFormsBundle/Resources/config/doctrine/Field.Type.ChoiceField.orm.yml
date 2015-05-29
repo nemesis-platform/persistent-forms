@@ -1,0 +1,5 @@
+ScayTrase\StoredFormsBundle\Entity\Field\Type\ChoiceField:
+    type: entity
+    fields:
+        choices:
+          type: json_array
