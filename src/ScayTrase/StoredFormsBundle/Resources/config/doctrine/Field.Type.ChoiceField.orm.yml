@@ -3,3 +3,7 @@ ScayTrase\StoredFormsBundle\Entity\Field\Type\ChoiceField:
     fields:
         choices:
           type: json_array
+        multiple:
+          type: boolean
+        expanded:
+          type: boolean
