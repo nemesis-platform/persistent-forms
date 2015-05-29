@@ -1,5 +1,5 @@
 ScayTrase\StoredFormsBundle\Entity\Value\Type\ArrayValue:
   type: entity
   fields:
-    value:
-      type: string
+    arrayValue:
+      type: json_array
