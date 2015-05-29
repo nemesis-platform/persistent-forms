@@ -16,6 +16,9 @@ class ChoiceFieldType extends AbstractFieldType
     {
         parent::buildForm($builder, $options);
 
+        $builder->add('multiple', 'checkbox', array('required' => false));
+        $builder->add('expanded', 'checkbox', array('required' => false));
+
         $builder->add(
             'choices',
             'key_value_collection',
