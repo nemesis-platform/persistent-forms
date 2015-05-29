@@ -17,15 +17,6 @@ use Symfony\Component\Form\FormTypeInterface;
 
 class TextAreaField extends AbstractField
 {
-
-    /**
-     * @return FormTypeInterface|string FormTypeInterface instance or string which represents registered form type
-     */
-    public function getFormType()
-    {
-        return 'textarea';
-    }
-
     /**
      * @return string Name key for the object
      */

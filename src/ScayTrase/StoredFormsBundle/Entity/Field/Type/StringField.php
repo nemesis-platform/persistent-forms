@@ -13,15 +13,6 @@ use Symfony\Component\Form\FormTypeInterface;
 
 class StringField extends AbstractField
 {
-
-    /**
-     * @return FormTypeInterface|string FormTypeInterface instance or string which represents registered form type
-     */
-    public function getFormType()
-    {
-        return 'text';
-    }
-
     /**
      * @return string Name key for the object
      */

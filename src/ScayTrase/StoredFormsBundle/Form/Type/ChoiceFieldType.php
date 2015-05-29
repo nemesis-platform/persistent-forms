@@ -16,7 +16,15 @@ class ChoiceFieldType extends AbstractFieldType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('choices', 'key_value_collection');
+        $builder->add(
+            'choices',
+            'key_value_collection',
+            array(
+                'options'      => array('attr' => array('style' => 'inline')),
+                'allow_add'    => true,
+                'allow_delete' => true,
+            )
+        );
     }
 
     /**

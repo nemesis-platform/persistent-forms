@@ -32,8 +32,14 @@ class StoredFormsTest extends TypeTestCase
         $choice->setName('choice_type');
         $choice->setChoices(array('choice1', 'choice2'));
 
+        $multipleChoice = new ChoiceField();
+        $multipleChoice->setMultiple(true);
+        $multipleChoice->setName('multiple_choice_type');
+        $multipleChoice->setChoices(array('choice1', 'choice2', 'choice3'));
+
+
         /** @var AbstractField[] $fields */
-        $fields = array($string, $text, $number, $choice);
+        $fields = array($string, $text, $number, $choice, $multipleChoice);
 
         $builder = $this->factory->createBuilder('form');
 
@@ -42,10 +48,11 @@ class StoredFormsTest extends TypeTestCase
         }
 
         $data = array(
-            'string_type' => 'the string to test',
-            'text_type'   => 'Some text goes here',
-            'number_type' => 1,
-            'choice_type' => 0,
+            'string_type'          => 'the string to test',
+            'text_type'            => 'Some text goes here',
+            'number_type'          => 1,
+            'choice_type'          => 0,
+            'multiple_choice_type' => [0, 2]
         );
 
         $form = $builder->getForm();
@@ -53,35 +60,44 @@ class StoredFormsTest extends TypeTestCase
 
         self::assertTrue($form->isSynchronized());
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             'ScayTrase\StoredFormsBundle\Entity\Value\Type\PlainValue',
             $form->get('string_type')->getData()
         );
-        $this->assertEquals('the string to test', $form->get('string_type')->getData()->getValue());
-        $this->assertEquals($string, $form->get('string_type')->getData()->getField());
+        self::assertEquals('the string to test', $form->get('string_type')->getData()->getValue());
+        self::assertEquals($string, $form->get('string_type')->getData()->getField());
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             'ScayTrase\StoredFormsBundle\Entity\Value\Type\TextValue',
             $form->get('text_type')->getData()
         );
-        $this->assertEquals('Some text goes here', $form->get('text_type')->getData()->getValue());
-        $this->assertEquals($text, $form->get('text_type')->getData()->getField());
+        self::assertEquals('Some text goes here', $form->get('text_type')->getData()->getValue());
+        self::assertEquals($text, $form->get('text_type')->getData()->getField());
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             'ScayTrase\StoredFormsBundle\Entity\Value\Type\PlainValue',
             $form->get('number_type')->getData()
         );
-        $this->assertEquals(1, $form->get('number_type')->getData()->getValue());
-        $this->assertTrue(1.0 === $form->get('number_type')->getData()->getValue());
-        $this->assertEquals($number, $form->get('number_type')->getData()->getField());
+        self::assertEquals(1, $form->get('number_type')->getData()->getValue());
+        self::assertTrue(1.0 === $form->get('number_type')->getData()->getValue());
+        self::assertEquals($number, $form->get('number_type')->getData()->getField());
 
-        $this->assertInstanceOf(
-            'ScayTrase\StoredFormsBundle\Entity\Value\Type\PlainValue',
+        self::assertInstanceOf(
+            'ScayTrase\StoredFormsBundle\Entity\Value\Type\ChoiceValue',
             $form->get('choice_type')->getData()
         );
 
-        $this->assertEquals(0, $form->get('choice_type')->getData()->getValue());
-        $this->assertEquals('choice1', $form->get('choice_type')->getData()->getRenderValue());
-        $this->assertEquals($choice, $form->get('choice_type')->getData()->getField());
+        self::assertEquals(0, $form->get('choice_type')->getData()->getValue());
+        self::assertEquals('choice1', $form->get('choice_type')->getData()->getRenderValue());
+        self::assertEquals($choice, $form->get('choice_type')->getData()->getField());
+
+        self::assertInstanceOf(
+            'ScayTrase\StoredFormsBundle\Entity\Value\Type\ChoiceValue',
+            $form->get('multiple_choice_type')->getData()
+        );
+
+        self::assertEquals(array(0, 2), $form->get('multiple_choice_type')->getData()->getValue());
+        self::assertEquals(array('choice1', 'choice3'), $form->get('multiple_choice_type')->getData()->getRenderValue());
+        self::assertEquals($multipleChoice, $form->get('multiple_choice_type')->getData()->getField());
     }
 }

@@ -16,3 +16,5 @@ ScayTrase\StoredFormsBundle\Entity\Field\AbstractField:
       help_message:
         type: text
         nullable: true
+      required:
+        type: boolean
