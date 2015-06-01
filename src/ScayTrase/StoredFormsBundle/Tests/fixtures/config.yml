@@ -1,0 +1,4 @@
+framework:
+  test: ~
+  form: ~
+  validation:      { enable_annotations: true }
