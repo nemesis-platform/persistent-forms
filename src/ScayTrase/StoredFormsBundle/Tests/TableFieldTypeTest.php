@@ -12,6 +12,10 @@ use ScayTrase\StoredFormsBundle\Entity\Field\Type\ChoiceField;
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\StringField;
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\TableField;
 use ScayTrase\StoredFormsBundle\Entity\Value\Type\TableValue;
+use ScayTrase\StoredFormsBundle\Form\Type\TableRowType;
+use ScayTrase\StoredFormsBundle\Form\Type\TableType;
+use Symfony\Component\Form\PreloadedExtension;
+use Symfony\Component\Form\Test\FormInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class TableFieldTypeTest extends TypeTestCase
@@ -64,6 +68,24 @@ class TableFieldTypeTest extends TypeTestCase
             ),
         );
 
+        $expected = array(
+            0 => array(
+                'sub_choice_stage'       => 'first stage',
+                'sub_string_description' => 'First stage intro',
+                'sub_string_results'     => 'Gain reputation',
+            ),
+            1 => array(
+                'sub_choice_stage'       => 'first stage',
+                'sub_string_description' => 'First stage hard working',
+                'sub_string_results'     => 'Get significant results',
+            ),
+            2 => array(
+                'sub_choice_stage'       => 'second stage',
+                'sub_string_description' => 'Second stage distribution',
+                'sub_string_results'     => 'All failed',
+            ),
+        );
+
         $form = $builder->getForm();
 
         $form->submit($data);
@@ -92,26 +114,8 @@ class TableFieldTypeTest extends TypeTestCase
             self::assertArrayHasKey('sub_string_results', $row);
         }
 
-        self::assertEquals(
-            array(
-                0 => array(
-                    'sub_choice_stage'       => 'first stage',
-                    'sub_string_description' => 'First stage intro',
-                    'sub_string_results'     => 'Gain reputation',
-                ),
-                1 => array(
-                    'sub_choice_stage'       => 'first stage',
-                    'sub_string_description' => 'First stage hard working',
-                    'sub_string_results'     => 'Get significant results',
-                ),
-                2 => array(
-                    'sub_choice_stage'       => 'second stage',
-                    'sub_string_description' => 'Second stage distribution',
-                    'sub_string_results'     => 'All failed',
-                ),
-            ),
-            $tableValue->getRenderValue()
-        );
+
+        self::assertEquals($expected, $tableValue->getRenderValue());
 
         self::assertEquals(
             array(
@@ -128,9 +132,27 @@ class TableFieldTypeTest extends TypeTestCase
 
         self::assertTrue($form->isSynchronized());
 
+        self::assertEquals($expected, $form->get('table_field')->getData()->getRenderValue());
+
         $form->submit($data);
 
         self::assertTrue($form->isSynchronized());
         self::assertTrue($form->isValid());
+    }
+
+    protected function getExtensions()
+    {
+        /** @var FormInterface[] $types */
+        $types   = array();
+        $types[] = new TableType();
+        $types[] = new TableRowType();
+
+        $extensions = array();
+
+        foreach ($types as $type) {
+            $extensions[$type->getName()] = $type;
+        }
+
+        return array(new PreloadedExtension($extensions, array()));
     }
 }

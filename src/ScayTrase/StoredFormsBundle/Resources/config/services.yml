@@ -3,3 +3,29 @@ services:
     class: ScayTrase\StoredFormsBundle\Registry\FieldsRegistry
     tags:
     - { name: autoregistry, tag: storable_field }
+
+  scaytrase.stored_forms.type.table:
+    class: ScayTrase\StoredFormsBundle\Form\Type\TableType
+    tags:
+    - { name: form.type, alias: field_table }
+
+  scaytrase.stored_forms.type.table_row:
+    class: ScayTrase\StoredFormsBundle\Form\Type\TableRowType
+    tags:
+    - { name: form.type, alias: field_table_row }
+
+  scaytrase.stored_forms.settings.table_field:
+    class: ScayTrase\StoredFormsBundle\Form\Type\TableFieldType
+    tags:
+    - { name: form.type, alias: table_field_settings }
+
+  scaytrase.stored_forms.settings.choice_field:
+    class: ScayTrase\StoredFormsBundle\Form\Type\ChoiceFieldType
+    tags:
+    - { name: form.type, alias: field_choice_settings }
+
+  scaytrase.stored_forms.settings.abstract_field:
+    class: ScayTrase\StoredFormsBundle\Form\Type\AbstractFieldType
+    tags:
+    - { name: form.type, alias: field_settings }
+

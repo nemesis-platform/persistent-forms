@@ -8,7 +8,11 @@
 
 namespace ScayTrase\StoredFormsBundle\Form\Type;
 
+use ScayTrase\StoredFormsBundle\Entity\Value\Type\TableValue;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -28,12 +32,29 @@ class TableType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-//                'data_class'   => 'ScayTrase\StoredFormsBundle\Entity\Value\Type\TableValue',
-//                'property'     => 'value',
-                'type'         => new TableRowType(),
+                'type'         => 'field_table_row',
                 'allow_add'    => true,
                 'allow_delete' => true,
             )
+        );
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            function (FormEvent $event) use ($options) {
+                /** @var TableValue $tableValue */
+                $tableValue = $event->getData();
+                if (!$tableValue) {
+                    return;
+                }
+                $form = $event->getForm();
+                foreach ($tableValue->getValue() as $key => $row) {
+                    $form->add($key,$options['type'], $options['options']);
+                    $form->get($key)->setData($row);
+                }
+            }
         );
     }
 

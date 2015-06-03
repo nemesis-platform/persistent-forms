@@ -70,7 +70,7 @@ class TableField extends AbstractField
      */
     protected function getRenderedFormType()
     {
-        return new TableType();
+        return 'field_table';
     }
 
     /**
