@@ -20,6 +20,9 @@
     "phpunit/phpunit": "~4.6@stable",
     "scaytrase/symfony-test-utils": "~1.0"
   },
+  "suggest": {
+    "scaytrase/symfony-form-extensions": "For key-value collection functional"
+  },
   "autoload": {
     "psr-0": {
       "": "src/"
