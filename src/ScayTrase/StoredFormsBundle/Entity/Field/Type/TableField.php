@@ -41,7 +41,7 @@ class TableField extends AbstractField
     public function addField(AbstractField $field)
     {
         if (!$this->fields->contains($field)) {
-            $this->fields->add($field);
+            $this->fields->set($field->getName(), $field);
         }
     }
 

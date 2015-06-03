@@ -17,10 +17,12 @@ class TableFieldType extends AbstractFieldType
         parent::buildForm($builder, $options);
 
         $builder->add(
-            'children',
+            'fields',
             'collection',
             array(
                 'type'    => 'entity',
+                'allow_add'    => true,
+                'allow_delete' => true,
                 'options' => array(
                     'class' => 'ScayTrase\StoredFormsBundle\Entity\Field\AbstractField'
                 ),

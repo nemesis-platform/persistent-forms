@@ -14,6 +14,44 @@ use ScayTrase\StoredFormsBundle\Entity\Field\Type\TableField;
 
 class TableFieldPersistenceTest extends AbstractKernelTest
 {
+
+    public function testSubFieldsDuplicateHandled()
+    {
+        $string = new StringField();
+        $string->setName('string_type');
+        $string->setTitle('String field');
+        self::$em->persist($string);
+
+        $table = new TableField();
+        $table->setName('table_type');
+        $table->addField($string);
+        $table->addField($string);
+        self::$em->persist($table);
+
+        self::$em->flush();
+    }
+
+    public function testSubFieldsWithEqualNamesHandled()
+    {
+        $string1 = new StringField();
+        $string1->setName('string_type');
+        $string1->setTitle('String field 1');
+        self::$em->persist($string1);
+
+        $string2 = new StringField();
+        $string2->setName('string_type');
+        $string2->setTitle('String field 2');
+        self::$em->persist($string2);
+
+        $table = new TableField();
+        $table->setName('table_type');
+        $table->addField($string1);
+        $table->addField($string2);
+        self::$em->persist($table);
+
+        self::$em->flush();
+    }
+
     public function testTablePersistence()
     {
         $manager = self::$em;
