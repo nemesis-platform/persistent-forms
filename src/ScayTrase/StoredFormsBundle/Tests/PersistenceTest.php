@@ -60,7 +60,7 @@ class PersistenceTest extends AbstractKernelTest
 
         $form = $builder->getForm();
         $form->submit(
-            $data = array(
+            array(
                 'string_type'          => 'the string to test',
                 'text_type'            => 'Some text goes here',
                 'number_type'          => 1,
@@ -86,12 +86,12 @@ class PersistenceTest extends AbstractKernelTest
 
         self::assertCount(5, $stored);
 
-        $builder = $this->getContainer()->get('form.factory')->createBuilder('form');
-        foreach ($fields as $field) {
-            $field->buildForm($builder);
-        }
-
         $form = $builder->getForm();
+
+        $values = array();
+        foreach ($stored as $value) {
+            $values[$value->getField()->getName()] = $value;
+        }
         $form->setData($values);
 
         self::assertTrue($form->isSynchronized());
