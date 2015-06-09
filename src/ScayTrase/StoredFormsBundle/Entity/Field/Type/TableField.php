@@ -62,7 +62,7 @@ class TableField extends AbstractField
 
     public function getFormType()
     {
-        return new TableFieldType(get_class($this));
+        return 'table_field_settings';
     }
 
     /**

@@ -9,6 +9,7 @@
 namespace ScayTrase\StoredFormsBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ChoiceFieldType extends AbstractFieldType
 {
@@ -28,6 +29,13 @@ class ChoiceFieldType extends AbstractFieldType
                 'allow_delete' => true,
             )
         );
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults(array('data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Type\ChoiceField'));
     }
 
     /**

@@ -85,7 +85,7 @@ class ChoiceField extends AbstractField
      */
     public function getFormType()
     {
-        return new ChoiceFieldType(get_class($this));
+        return 'field_choice_settings';
     }
 
     /**

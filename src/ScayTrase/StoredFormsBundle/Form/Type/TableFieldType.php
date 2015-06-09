@@ -9,6 +9,7 @@
 namespace ScayTrase\StoredFormsBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TableFieldType extends AbstractFieldType
 {
@@ -39,4 +40,12 @@ class TableFieldType extends AbstractFieldType
     {
         return 'table_field_settings';
     }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults(array('data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Type\TableField'));
+    }
+
 }
