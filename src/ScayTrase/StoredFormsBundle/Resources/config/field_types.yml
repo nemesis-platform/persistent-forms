@@ -1,0 +1,25 @@
+services:
+  scaytrase.storable_forms.field_choice:
+    class: ScayTrase\StoredFormsBundle\Entity\Field\Type\ChoiceField
+    tags:
+    - { name: storable_field }
+
+  scaytrase.storable_forms.field_string:
+    class: ScayTrase\StoredFormsBundle\Entity\Field\Type\StringField
+    tags:
+    - { name: storable_field }
+
+  scaytrase.storable_forms.field_number:
+    class: ScayTrase\StoredFormsBundle\Entity\Field\Type\NumberField
+    tags:
+    - { name: storable_field }
+
+  scaytrase.storable_forms.field_textare:
+    class: ScayTrase\StoredFormsBundle\Entity\Field\Type\TextAreaField
+    tags:
+    - { name: storable_field }
+
+  scaytrase.storable_forms.field_table:
+    class: ScayTrase\StoredFormsBundle\Entity\Field\Type\TableField
+    tags:
+    - { name: storable_field }

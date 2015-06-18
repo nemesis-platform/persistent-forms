@@ -1,0 +1,9 @@
+ScayTrase\StoredFormsBundle\Entity\Field\Type\TableField:
+    type: entity
+    manyToMany:
+      fields:
+        targetEntity: ScayTrase\StoredFormsBundle\Entity\Field\AbstractField
+        orphanRemoval: true
+        cascade: [all]
+
+

@@ -1,0 +1,8 @@
+ScayTrase\StoredFormsBundle\Entity\Value\Type\TableValue:
+  type: entity
+  oneToMany:
+    rows:
+      targetEntity: ScayTrase\StoredFormsBundle\Entity\Value\Type\TableRow
+      mappedBy: table
+      cascade: [all]
+      orphanRemoval: true

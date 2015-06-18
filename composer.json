@@ -11,18 +11,21 @@
   ],
   "require": {
     "php": ">=5.3.3",
-    "symfony/symfony": "~2.4",
-    "scaytrase/symfony-form-extensions": "~2.0",
-    "doctrine/orm": "~2.2,>=2.2.3",
-    "sensio/framework-extra-bundle": "~3.0",
-    "scaytrase/symfony-autoregistry": "~1.0"
+    "symfony/form": "~2.4",
+    "doctrine/orm": "~2.3",
+    "scaytrase/symfony-autoregistry": "~2.0",
+    "symfony/validator": "~2.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.6@stable",
+    "scaytrase/symfony-test-utils": "~1.0"
+  },
+  "suggest": {
+    "scaytrase/symfony-form-extensions": "For key-value collection functional"
   },
   "autoload": {
     "psr-0": {
       "": "src/"
     }
-  },
-  "replace": {
-    "scaytrase/symfony-storable-forms": "self.version"
   }
 }
