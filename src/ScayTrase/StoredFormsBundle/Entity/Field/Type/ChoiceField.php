@@ -11,7 +11,6 @@ namespace ScayTrase\StoredFormsBundle\Entity\Field\Type;
 use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
 use ScayTrase\StoredFormsBundle\Entity\Value\Type\ChoiceValue;
 use ScayTrase\StoredFormsBundle\Form\Transformer\ValueTransformer;
-use ScayTrase\StoredFormsBundle\Form\Type\ChoiceFieldType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
@@ -75,9 +74,19 @@ class ChoiceField extends AbstractField
     /**
      * @param array $choices
      */
-    public function setChoices($choices)
+    public function setChoices(array $choices)
     {
-        $this->choices = $choices;
+        foreach ($choices as $key => $choice) {
+            if (!is_array($choice)) {
+                $choice = array('value' => $choice);
+            }
+
+            if (array_key_exists('key', $choice) && $choice['key'] !== null) {
+                $key = $choice['key'];
+            }
+
+            $this->choices[$key] = $choice;
+        }
     }
 
     /**
@@ -101,12 +110,30 @@ class ChoiceField extends AbstractField
      */
     protected function getRenderedFormOptions()
     {
+        $choices = array();
+
+        foreach ($this->choices as $key => $row) {
+            if (!is_array($row)) {
+                $row = array('value' => $row);
+            }
+
+            if (array_key_exists('key', $row) && $row['key'] !== null) {
+                $key = $row['key'];
+            }
+
+            if (array_key_exists('optgroup', $row) && $row['optgroup'] !== null) {
+                $choices[$row['optgroup']][$key] = $row['value'];
+            } else {
+                $choices[$key] = $row['value'];
+            }
+        }
+
         return array_replace_recursive(
             parent::getRenderedFormOptions(),
             array(
-                'choices' => $this->choices,
+                'choices'  => $choices,
                 'expanded' => $this->expanded,
-                'multiple' => $this->multiple
+                'multiple' => $this->multiple,
             )
         );
 

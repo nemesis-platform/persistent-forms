@@ -22,9 +22,9 @@ class ChoiceFieldType extends AbstractFieldType
 
         $builder->add(
             'choices',
-            'key_value_collection',
+            'collection',
             array(
-                'options'      => array('attr' => array('style' => 'inline')),
+                'type'         => new ChoiceFieldOptionType(),
                 'allow_add'    => true,
                 'allow_delete' => true,
             )
