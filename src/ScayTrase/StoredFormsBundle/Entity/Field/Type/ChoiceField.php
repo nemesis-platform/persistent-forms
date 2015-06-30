@@ -63,12 +63,23 @@ class ChoiceField extends AbstractField
         return 'choice_field';
     }
 
+
     /**
      * @return array
      */
     public function getChoices()
     {
-        return $this->choices;
+        $choices = array();
+
+        foreach ($this->choices as $key => $choice) {
+            if (!is_array($choice)) {
+                $choices[$key] = array('value'=>$choice);
+            } else {
+                $choices[$key] = $choice;
+            }
+        }
+
+        return $choices;
     }
 
     /**
@@ -76,6 +87,8 @@ class ChoiceField extends AbstractField
      */
     public function setChoices(array $choices)
     {
+        $this->choices = array();
+
         foreach ($choices as $key => $choice) {
             if (!is_array($choice)) {
                 $choice = array('value' => $choice);
