@@ -12,8 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
 use ScayTrase\StoredFormsBundle\Entity\Value\Type\TableValue;
 use ScayTrase\StoredFormsBundle\Form\Transformer\ValueTransformer;
-use ScayTrase\StoredFormsBundle\Form\Type\TableFieldType;
-use ScayTrase\StoredFormsBundle\Form\Type\TableType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
