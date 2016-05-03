@@ -13,6 +13,9 @@ use ScayTrase\StoredFormsBundle\Entity\Field\Type\ChoiceField;
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\NumberField;
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\StringField;
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\TextAreaField;
+use ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class PersistenceTest extends AbstractKernelTest
 {
@@ -21,38 +24,33 @@ class PersistenceTest extends AbstractKernelTest
     {
         $manager = self::$em;
 
-        $string = new StringField();
-        $string->setName('string_type');
+        $string = new StringField('string_type');
         $manager->persist($string);
 
-        $text = new TextAreaField();
-        $text->setName('text_type');
+        $text = new TextAreaField('text_type');
         $manager->persist($text);
 
-        $number = new NumberField();
-        $number->setName('number_type');
+        $number = new NumberField('number_type');
         $manager->persist($number);
 
-        $choice = new ChoiceField();
-        $choice->setName('choice_type');
+        $choice = new ChoiceField('choice_type');
         $choice->setChoices(array('choice1', 'choice2'));
         $manager->persist($choice);
 
-        $multipleChoice = new ChoiceField();
+        $multipleChoice = new ChoiceField('multiple_choice_type');
         $multipleChoice->setMultiple(true);
-        $multipleChoice->setName('multiple_choice_type');
         $multipleChoice->setChoices(array('choice1', 'choice2', 'choice3'));
         $manager->persist($multipleChoice);
-
         $manager->flush();
 
         $manager->clear();
 
         /** @var AbstractField[] $fields */
-        $fields = $manager->getRepository('StoredFormsBundle:Field\AbstractField')->findAll();
+        $fields = $manager->getRepository(AbstractField::class)->findAll();
         self::assertCount(5, $fields);
 
-        $builder = $this->getContainer()->get('form.factory')->createBuilder('form');
+        /** @var FormBuilderInterface $builder */
+        $builder = $this->getContainer()->get('form.factory')->createBuilder(FormType::class);
 
         foreach ($fields as $field) {
             $field->buildForm($builder);
@@ -63,8 +61,8 @@ class PersistenceTest extends AbstractKernelTest
             array(
                 'string_type'          => 'the string to test',
                 'text_type'            => 'Some text goes here',
-                'number_type'          => 1,
-                'choice_type'          => 0,
+                'number_type'          => '1',
+                'choice_type'          => '0',
                 'multiple_choice_type' => array(0, 2),
             )
         );
@@ -72,6 +70,7 @@ class PersistenceTest extends AbstractKernelTest
         self::assertTrue($form->isSynchronized());
 
         $values = $form->getData();
+
 
         self::assertCount(5, $values);
 
@@ -82,7 +81,7 @@ class PersistenceTest extends AbstractKernelTest
         $manager->flush();
         $manager->clear();
 
-        $stored = $manager->getRepository('StoredFormsBundle:Value\AbstractValue')->findAll();
+        $stored = $manager->getRepository(AbstractValue::class)->findAll();
 
         self::assertCount(5, $stored);
 

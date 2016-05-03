@@ -14,6 +14,7 @@ use ScayTrase\StoredFormsBundle\Entity\Field\Type\TableField;
 use ScayTrase\StoredFormsBundle\Entity\Value\Type\TableValue;
 use ScayTrase\StoredFormsBundle\Form\Type\TableRowType;
 use ScayTrase\StoredFormsBundle\Form\Type\TableType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\FormInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
@@ -22,29 +23,25 @@ class TableFieldTypeTest extends TypeTestCase
 {
     public function testTypeOperations()
     {
-        $table = new TableField();
-        $table->setName('table_field');
+        $table = new TableField('table_field');
 
-        $subStageChoice = new ChoiceField();
-        $subStageChoice->setName('sub_choice_stage');
+        $subStageChoice = new ChoiceField('sub_choice_stage');
         $subStageChoice->setTitle('Stage');
         $subStageChoice->setMultiple(false);
         $subStageChoice->setExpanded(false);
         $subStageChoice->setChoices(array('1' => 'first stage', '2' => 'second stage'));
 
-        $subStageDescriptionString = new StringField();
-        $subStageDescriptionString->setName('sub_string_description');
+        $subStageDescriptionString = new StringField('sub_string_description');
         $subStageDescriptionString->setTitle('Description');
 
-        $subStageResultsString = new StringField();
-        $subStageResultsString->setName('sub_string_results');
+        $subStageResultsString = new StringField('sub_string_results');
         $subStageResultsString->setTitle('Results');
 
         $table->addField($subStageChoice);
         $table->addField($subStageDescriptionString);
         $table->addField($subStageResultsString);
 
-        $builder = $this->factory->createBuilder('form');
+        $builder = $this->factory->createBuilder(FormType::class);
 
         $table->buildForm($builder);
 
@@ -147,12 +144,6 @@ class TableFieldTypeTest extends TypeTestCase
         $types[] = new TableType();
         $types[] = new TableRowType();
 
-        $extensions = array();
-
-        foreach ($types as $type) {
-            $extensions[$type->getName()] = $type;
-        }
-
-        return array(new PreloadedExtension($extensions, array()));
+        return array(new PreloadedExtension($types, array()));
     }
 }

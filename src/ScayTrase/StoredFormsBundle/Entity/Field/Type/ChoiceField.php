@@ -11,7 +11,9 @@ namespace ScayTrase\StoredFormsBundle\Entity\Field\Type;
 use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
 use ScayTrase\StoredFormsBundle\Entity\Value\Type\ChoiceValue;
 use ScayTrase\StoredFormsBundle\Form\Transformer\ValueTransformer;
+use ScayTrase\StoredFormsBundle\Form\Type\ChoiceFieldType;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormTypeInterface;
 
 class ChoiceField extends AbstractField
@@ -56,15 +58,6 @@ class ChoiceField extends AbstractField
     }
 
     /**
-     * @return string Name key for the object
-     */
-    public function getType()
-    {
-        return 'choice_field';
-    }
-
-
-    /**
      * @return array
      */
     public function getChoices()
@@ -107,7 +100,7 @@ class ChoiceField extends AbstractField
      */
     public function getFormType()
     {
-        return 'field_choice_settings';
+        return ChoiceFieldType::class;
     }
 
     /**
@@ -115,7 +108,7 @@ class ChoiceField extends AbstractField
      */
     protected function getRenderedFormType()
     {
-        return 'choice';
+        return ChoiceType::class;
     }
 
     /**
@@ -141,12 +134,16 @@ class ChoiceField extends AbstractField
             }
         }
 
+        var_dump($choices);
+
         return array_replace_recursive(
             parent::getRenderedFormOptions(),
             array(
-                'choices'  => $choices,
-                'expanded' => $this->expanded,
-                'multiple' => $this->multiple,
+                'empty_data'        => new ChoiceValue($this, $this->isMultiple() ? [] : null),
+                'choices_as_values' => true,
+                'choices'           => $choices,
+                'expanded'          => $this->isExpanded(),
+                'multiple'          => $this->isMultiple(),
             )
         );
 
@@ -157,9 +154,6 @@ class ChoiceField extends AbstractField
      */
     protected function getValueTransformer()
     {
-        $value = new ChoiceValue();
-        $value->setField($this);
-
-        return new ValueTransformer($value, 'value');
+        return new ValueTransformer(new ChoiceValue($this), 'value');
     }
 }

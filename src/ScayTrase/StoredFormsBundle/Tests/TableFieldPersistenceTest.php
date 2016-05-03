@@ -11,19 +11,20 @@ namespace ScayTrase\StoredFormsBundle\Tests;
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\ChoiceField;
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\StringField;
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\TableField;
+use ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class TableFieldPersistenceTest extends AbstractKernelTest
 {
 
     public function testSubFieldsDuplicateHandled()
     {
-        $string = new StringField();
-        $string->setName('string_type');
+        $string = new StringField('string_type');
         $string->setTitle('String field');
         self::$em->persist($string);
 
-        $table = new TableField();
-        $table->setName('table_type');
+        $table = new TableField('table_type');
         $table->addField($string);
         $table->addField($string);
         self::$em->persist($table);
@@ -33,18 +34,15 @@ class TableFieldPersistenceTest extends AbstractKernelTest
 
     public function testSubFieldsWithEqualNamesHandled()
     {
-        $string1 = new StringField();
-        $string1->setName('string_type');
+        $string1 = new StringField('string_type');
         $string1->setTitle('String field 1');
         self::$em->persist($string1);
 
-        $string2 = new StringField();
-        $string2->setName('string_type');
+        $string2 = new StringField('string_type');
         $string2->setTitle('String field 2');
         self::$em->persist($string2);
 
-        $table = new TableField();
-        $table->setName('table_type');
+        $table = new TableField('table_type');
         $table->addField($string1);
         $table->addField($string2);
         self::$em->persist($table);
@@ -56,20 +54,17 @@ class TableFieldPersistenceTest extends AbstractKernelTest
     {
         $manager = self::$em;
 
-        $string = new StringField();
-        $string->setName('string_type');
+        $string = new StringField('string_type');
         $string->setTitle('String field');
         $manager->persist($string);
 
 
-        $choice = new ChoiceField();
-        $choice->setName('choice_type');
+        $choice = new ChoiceField('choice_type');
         $choice->setChoices(array('v1' => 'choice1', 'v2' => 'choice2'));
         $choice->setTitle('Choice field');
         $manager->persist($choice);
 
-        $table = new TableField();
-        $table->setName('table_type');
+        $table = new TableField('table_type');
         $table->addField($string);
         $table->addField($choice);
         $manager->persist($table);
@@ -78,11 +73,11 @@ class TableFieldPersistenceTest extends AbstractKernelTest
         $manager->clear();
 
         /** @var TableField $fields */
-        $field = $manager
-            ->getRepository('StoredFormsBundle:Field\Type\TableField')->findOneBy(array('name' => 'table_type'));
+        $field = $manager->getRepository(TableField::class)->findOneBy(['name' => 'table_type']);
         self::assertNotNull($field);
 
-        $builder = $this->getContainer()->get('form.factory')->createBuilder('form');
+        /** @var FormBuilderInterface $builder */
+        $builder = $this->getContainer()->get('form.factory')->createBuilder(FormType::class);
 
         $field->buildForm($builder);
 
@@ -119,7 +114,7 @@ class TableFieldPersistenceTest extends AbstractKernelTest
         $manager->flush();
         $manager->clear();
 
-        $stored = $manager->getRepository('StoredFormsBundle:Value\AbstractValue')->findBy(array('field' => $field));
+        $stored = $manager->getRepository(AbstractValue::class)->findBy(array('field' => $field));
         self::assertCount(1, $stored);
         self::assertCount(3, $stored[0]->getValue());
 
@@ -133,7 +128,7 @@ class TableFieldPersistenceTest extends AbstractKernelTest
             $values[$value->getField()->getName()] = $value;
         }
 
-        $builder = $this->getContainer()->get('form.factory')->createBuilder('form');
+        $builder = $this->getContainer()->get('form.factory')->createBuilder(FormType::class);
         $field->buildForm($builder);
         $form = $builder->getForm();
 

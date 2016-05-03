@@ -1,14 +1,13 @@
 ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue:
-    type: entity
-    inheritanceType: SINGLE_TABLE
+  type: entity
+  inheritanceType: SINGLE_TABLE
+  id:
     id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: IDENTITY
-    manyToOne:
-        field:
-          targetEntity: ScayTrase\StoredFormsBundle\Entity\Field\AbstractField
-          joinColumn:
-            name: type
+      type: guid
+      id: true
+
+  manyToOne:
+    field:
+      targetEntity: ScayTrase\StoredFormsBundle\Entity\Field\AbstractField
+      joinColumn:
+        name: type

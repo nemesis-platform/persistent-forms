@@ -8,8 +8,9 @@
 
 namespace ScayTrase\StoredFormsBundle\Form\Type;
 
+use ScayTrase\StoredFormsBundle\Entity\Field\Type\ChoiceField;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChoiceFieldType extends AbstractFieldType
 {
@@ -24,27 +25,17 @@ class ChoiceFieldType extends AbstractFieldType
             'choices',
             'collection',
             array(
-                'type'         => new ChoiceFieldOptionType(),
+                'entry_type'   => ChoiceFieldOptionType::class,
                 'allow_add'    => true,
                 'allow_delete' => true,
             )
         );
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
-        $resolver->setDefaults(array('data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Type\ChoiceField'));
-    }
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'field_choice_settings';
+        $resolver->setDefaults(['data_class' => ChoiceField::class]);
     }
 }

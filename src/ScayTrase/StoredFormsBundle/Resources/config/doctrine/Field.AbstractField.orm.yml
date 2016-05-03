@@ -3,10 +3,8 @@ ScayTrase\StoredFormsBundle\Entity\Field\AbstractField:
     inheritanceType: SINGLE_TABLE
     id:
       id:
-        type: integer
+        type: guid
         id: true
-        generator:
-          strategy: IDENTITY
     fields:
       name:
         type: string

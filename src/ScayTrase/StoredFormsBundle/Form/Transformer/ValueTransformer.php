@@ -46,6 +46,10 @@ class ValueTransformer implements DataTransformerInterface
     /** @inheritdoc */
     public function reverseTransform($value)
     {
+        if (null === $value) {
+            return $this->value;
+        }
+
         $accessor = new PropertyAccessor();
         $accessor->setValue($this->value, $this->propertyPath, $value);
 

@@ -26,10 +26,11 @@ class ChoiceValue extends ArrayValue
 
         $choices = $field->getChoices();
 
+        $value = $this->getValue();
         if ($field->isMultiple()) {
             $values = array();
 
-            foreach ($this->getValue() as $key) {
+            foreach ($value as $key) {
                 if (array_key_exists($key, $choices)) {
                     if (is_array($choices[$key]) && array_key_exists('value', $choices[$key])) {
                         $values[] = $choices[$key]['value'];
@@ -42,11 +43,11 @@ class ChoiceValue extends ArrayValue
             return $values;
         }
 
-        if (array_key_exists($this->getValue(), $choices)) {
-            if (is_array($choices[$this->getValue()]) && array_key_exists('value', $choices[$this->getValue()])) {
-                return $choices[$this->getValue()]['value'];
+        if (array_key_exists($value, $choices)) {
+            if (is_array($choices[$value]) && array_key_exists('value', $choices[$value])) {
+                return $choices[$value]['value'];
             } else {
-                return $choices[$this->getValue()];
+                return $choices[$value];
             }
         }
 

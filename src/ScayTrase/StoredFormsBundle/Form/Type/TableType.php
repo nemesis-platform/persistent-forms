@@ -10,6 +10,7 @@ namespace ScayTrase\StoredFormsBundle\Form\Type;
 
 use ScayTrase\StoredFormsBundle\Entity\Value\Type\TableValue;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -20,15 +21,10 @@ class TableType extends AbstractType
 {
     public function getParent()
     {
-        return 'collection';
+        return CollectionType::class;
     }
 
     public function configureOptions(OptionsResolver $resolver)
-    {
-        $this->setDefaultOptions($resolver);
-    }
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
             array(
@@ -56,15 +52,5 @@ class TableType extends AbstractType
                 }
             }
         );
-    }
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'field_table';
     }
 }

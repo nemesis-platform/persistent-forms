@@ -8,7 +8,10 @@
 
 namespace ScayTrase\StoredFormsBundle\Form\Type;
 
+use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
+use ScayTrase\StoredFormsBundle\Entity\Field\Type\TableField;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TableFieldType extends AbstractFieldType
@@ -25,27 +28,17 @@ class TableFieldType extends AbstractFieldType
                 'allow_add'    => true,
                 'allow_delete' => true,
                 'options' => array(
-                    'class' => 'ScayTrase\StoredFormsBundle\Entity\Field\AbstractField'
+                    'class' => AbstractField::class,
                 ),
             )
         );
     }
 
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return 'table_field_settings';
-    }
+        parent::configureOptions($resolver);
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        parent::setDefaultOptions($resolver);
-
-        $resolver->setDefaults(array('data_class' => 'ScayTrase\StoredFormsBundle\Entity\Field\Type\TableField'));
+        $resolver->setDefaults(['data_class' => TableField::class]);
     }
 
 }

@@ -1,24 +1,22 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Pavel
- * Date: 2015-05-25
- * Time: 21:50
+ * User: scaytrase
+ * Created: 2016-05-03 20:07
  */
 
 namespace ScayTrase\StoredFormsBundle\Entity\Field\Type;
 
 use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormTypeInterface;
 
-class NumberField extends AbstractField
+class IntegerField extends AbstractField
 {
     /**
      * @return string|FormTypeInterface
      */
     protected function getRenderedFormType()
     {
-        return NumberType::class;
+        return IntegerType::class;
     }
 }

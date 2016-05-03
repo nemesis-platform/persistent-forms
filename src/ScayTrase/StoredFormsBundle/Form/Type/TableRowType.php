@@ -16,17 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TableRowType extends AbstractType
 {
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'field_table_row';
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         /** @var AbstractField[] $fields */
@@ -43,24 +32,7 @@ class TableRowType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $this->setDefaultOptions($resolver);
-    }
-
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setRequired(
-            array(
-                'fields',
-            )
-        );
-
-        $reflection = new \ReflectionMethod($resolver, 'setAllowedTypes');
-        if ($reflection->getNumberOfParameters() === 2) {
-            $resolver->setAllowedTypes('fields', 'array');
-        } else {
-            $resolver->setAllowedTypes(array('fields' => 'array'));
-        }
-
+        $resolver->setRequired('fields');
+        $resolver->setAllowedTypes('fields', 'array');
     }
 }

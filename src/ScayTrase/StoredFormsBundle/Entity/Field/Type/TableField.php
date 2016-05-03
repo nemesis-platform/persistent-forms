@@ -12,6 +12,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
 use ScayTrase\StoredFormsBundle\Entity\Value\Type\TableValue;
 use ScayTrase\StoredFormsBundle\Form\Transformer\ValueTransformer;
+use ScayTrase\StoredFormsBundle\Form\Type\TableFieldType;
+use ScayTrase\StoredFormsBundle\Form\Type\TableRowType;
+use ScayTrase\StoredFormsBundle\Form\Type\TableType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormTypeInterface;
 
@@ -22,9 +25,12 @@ class TableField extends AbstractField
 
     /**
      * TableField constructor.
+     *
+     * @param string $name
      */
-    public function __construct()
+    public function __construct($name)
     {
+        parent::__construct($name);
         $this->fields = new ArrayCollection();
     }
 
@@ -50,17 +56,10 @@ class TableField extends AbstractField
         }
     }
 
-    /**
-     * @return string Name key for the object
-     */
-    public function getType()
-    {
-        return 'table_field';
-    }
 
     public function getFormType()
     {
-        return 'table_field_settings';
+        return TableFieldType::class;
     }
 
     /**
@@ -68,7 +67,7 @@ class TableField extends AbstractField
      */
     protected function getRenderedFormType()
     {
-        return 'field_table';
+        return TableType::class;
     }
 
     /**
@@ -79,7 +78,9 @@ class TableField extends AbstractField
         return array_replace_recursive(
             parent::getRenderedFormOptions(),
             array(
-                'options' => array(
+                'empty_data'    => new TableValue($this),
+                'entry_type'    => TableRowType::class,
+                'entry_options' => array(
                     'fields' => $this->fields->toArray(),
                 ),
             )
@@ -92,9 +93,6 @@ class TableField extends AbstractField
      */
     protected function getValueTransformer()
     {
-        $value = new TableValue();
-        $value->setField($this);
-
-        return new ValueTransformer($value, 'value');
+        return new ValueTransformer(new TableValue($this), 'value');
     }
 }

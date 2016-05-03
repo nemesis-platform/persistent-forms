@@ -9,6 +9,7 @@
 namespace ScayTrase\StoredFormsBundle\Entity\Value\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Ramsey\Uuid\Uuid;
 use ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue;
 
 class TableRow
@@ -27,8 +28,9 @@ class TableRow
      */
     public function __construct(TableValue $table)
     {
-        $this->values = new ArrayCollection();
         $this->table  = $table;
+        $this->values = new ArrayCollection();
+        $this->id     = Uuid::uuid4();
     }
 
     /**

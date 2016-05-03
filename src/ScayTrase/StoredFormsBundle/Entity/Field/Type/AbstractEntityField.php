@@ -10,6 +10,7 @@ namespace ScayTrase\StoredFormsBundle\Entity\Field\Type;
 
 use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
 use ScayTrase\StoredFormsBundle\Form\Type\AbstractEntityFieldType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormTypeInterface;
 
 abstract class AbstractEntityField extends AbstractField
@@ -23,7 +24,7 @@ abstract class AbstractEntityField extends AbstractField
 
     public function getFormType()
     {
-        return new AbstractEntityFieldType(get_class($this));
+        return AbstractEntityFieldType::class;
     }
 
     /**
@@ -31,6 +32,6 @@ abstract class AbstractEntityField extends AbstractField
      */
     protected function getRenderedFormType()
     {
-        return 'entity';
+        return EntityType::class;
     }
 }

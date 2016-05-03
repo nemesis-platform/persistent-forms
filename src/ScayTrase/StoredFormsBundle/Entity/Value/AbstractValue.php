@@ -9,6 +9,7 @@
 namespace ScayTrase\StoredFormsBundle\Entity\Value;
 
 
+use Ramsey\Uuid\Uuid;
 use ScayTrase\StoredFormsBundle\Entity\Field\AbstractField;
 
 abstract class AbstractValue
@@ -17,6 +18,20 @@ abstract class AbstractValue
     private $id;
     /** @var  AbstractField */
     private $field;
+
+    /**
+     * AbstractValue constructor.
+     *
+     * @param AbstractField $field
+     * @param mixed         $value
+     */
+    public function __construct(AbstractField $field, $value = null)
+    {
+        $this->id    = Uuid::uuid4();
+        $this->field = $field;
+        $this->setValue($value);
+    }
+
 
     /**
      * @return int|null

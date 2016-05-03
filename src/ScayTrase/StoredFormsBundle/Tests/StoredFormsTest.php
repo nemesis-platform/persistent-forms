@@ -13,35 +13,34 @@ use ScayTrase\StoredFormsBundle\Entity\Field\Type\ChoiceField;
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\NumberField;
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\StringField;
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\TextAreaField;
+use ScayTrase\StoredFormsBundle\Entity\Value\Type\ChoiceValue;
+use ScayTrase\StoredFormsBundle\Entity\Value\Type\PlainValue;
+use ScayTrase\StoredFormsBundle\Entity\Value\Type\TextValue;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class StoredFormsTest extends TypeTestCase
 {
     public function testTransformations()
     {
-        $string = new StringField();
-        $string->setName('string_type');
+        $string = new StringField('string_type');
 
-        $text = new TextAreaField();
-        $text->setName('text_type');
+        $text = new TextAreaField('text_type');
 
-        $number = new NumberField();
-        $number->setName('number_type');
+        $number = new NumberField('number_type');
 
-        $choice = new ChoiceField();
-        $choice->setName('choice_type');
-        $choice->setChoices(array('choice1', 'choice2'));
+        $choice = new ChoiceField('choice_type');
+        $choice->setChoices(['choice1', 'choice2']);
 
-        $multipleChoice = new ChoiceField();
+        $multipleChoice = new ChoiceField('multiple_choice_type');
         $multipleChoice->setMultiple(true);
-        $multipleChoice->setName('multiple_choice_type');
         $multipleChoice->setChoices(array('choice1', 'choice2', 'choice3'));
 
 
         /** @var AbstractField[] $fields */
         $fields = array($string, $text, $number, $choice, $multipleChoice);
 
-        $builder = $this->factory->createBuilder('form');
+        $builder = $this->factory->createBuilder(FormType::class);
 
         foreach ($fields as $field) {
             $field->buildForm($builder);
@@ -61,21 +60,21 @@ class StoredFormsTest extends TypeTestCase
         self::assertTrue($form->isSynchronized());
 
         self::assertInstanceOf(
-            'ScayTrase\StoredFormsBundle\Entity\Value\Type\PlainValue',
+            PlainValue::class,
             $form->get('string_type')->getData()
         );
         self::assertEquals('the string to test', $form->get('string_type')->getData()->getValue());
         self::assertEquals($string, $form->get('string_type')->getData()->getField());
 
         self::assertInstanceOf(
-            'ScayTrase\StoredFormsBundle\Entity\Value\Type\TextValue',
+            TextValue::class,
             $form->get('text_type')->getData()
         );
         self::assertEquals('Some text goes here', $form->get('text_type')->getData()->getValue());
         self::assertEquals($text, $form->get('text_type')->getData()->getField());
 
         self::assertInstanceOf(
-            'ScayTrase\StoredFormsBundle\Entity\Value\Type\PlainValue',
+            PlainValue::class,
             $form->get('number_type')->getData()
         );
         self::assertEquals(1, $form->get('number_type')->getData()->getValue());
@@ -83,7 +82,7 @@ class StoredFormsTest extends TypeTestCase
         self::assertEquals($number, $form->get('number_type')->getData()->getField());
 
         self::assertInstanceOf(
-            'ScayTrase\StoredFormsBundle\Entity\Value\Type\ChoiceValue',
+            ChoiceValue::class,
             $form->get('choice_type')->getData()
         );
 
@@ -92,7 +91,7 @@ class StoredFormsTest extends TypeTestCase
         self::assertEquals($choice, $form->get('choice_type')->getData()->getField());
 
         self::assertInstanceOf(
-            'ScayTrase\StoredFormsBundle\Entity\Value\Type\ChoiceValue',
+            ChoiceValue::class,
             $form->get('multiple_choice_type')->getData()
         );
 

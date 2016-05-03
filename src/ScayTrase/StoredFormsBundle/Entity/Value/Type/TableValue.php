@@ -19,9 +19,13 @@ class TableValue extends AbstractValue implements \ArrayAccess, \IteratorAggrega
 
     /**
      * TableValue constructor.
+     *
+     * @param TableField $field
+     * @param mixed      $value
      */
-    public function __construct()
+    public function __construct(TableField $field, $value = null)
     {
+        parent::__construct($field, $value);
         $this->rows = new ArrayCollection();
     }
 
@@ -42,7 +46,9 @@ class TableValue extends AbstractValue implements \ArrayAccess, \IteratorAggrega
     public function setValue($value)
     {
         $rows  = array();
-        $value = (array)$value;
+        if (!is_array($value)) {
+            $value = [$value];
+        }
         foreach ($value as $row) {
             $tableRow = new TableRow($this);
             $tableRow->setValues($row);

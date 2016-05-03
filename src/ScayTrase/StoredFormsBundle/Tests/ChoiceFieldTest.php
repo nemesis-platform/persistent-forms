@@ -10,6 +10,7 @@ namespace ScayTrase\StoredFormsBundle\Tests;
 
 
 use ScayTrase\StoredFormsBundle\Entity\Field\Type\ChoiceField;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\FormBuilderInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
 
@@ -40,11 +41,10 @@ class ChoiceFieldTest extends TypeTestCase
     /** @return FormBuilderInterface */
     private function createTestFieldBuilder(array $choices = array())
     {
-        $multipleChoice = new ChoiceField();
+        $multipleChoice = new ChoiceField('multiple_choice_type');
         $multipleChoice->setMultiple(true);
-        $multipleChoice->setName('multiple_choice_type');
         $multipleChoice->setChoices($choices);
-        $builder = $this->factory->createBuilder('form');
+        $builder = $this->factory->createBuilder(FormType::class);
         $multipleChoice->buildForm($builder);
 
         return $builder;

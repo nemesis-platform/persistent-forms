@@ -2,10 +2,8 @@ ScayTrase\StoredFormsBundle\Entity\Value\Type\TableRow:
   type: entity
   id:
     id:
-      type: integer
+      type: guid
       id: true
-      generator:
-        strategy: IDENTITY
 
   manyToMany:
     values:

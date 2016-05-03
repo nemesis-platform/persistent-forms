@@ -10,15 +10,18 @@
     }
   ],
   "require": {
-    "php": ">=5.4",
-    "symfony/form": "~2.4",
+    "php": ">=5.5",
+    "symfony/form": "~2.4 | ~3.0",
     "doctrine/orm": "~2.3",
     "scaytrase/symfony-autoregistry": "~2.0",
-    "symfony/validator": "~2.3"
+    "symfony/validator": "~2.3 | ~3.0",
+    "ramsey/uuid": "~3.4"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.6@stable",
-    "scaytrase/symfony-test-utils": "~1.0"
+    "phpunit/phpunit": "~4.6@stable | ~5.1",
+    "scaytrase/symfony-test-utils": "~1.0",
+    "symfony/twig-bundle": "~2.3 | ~3.0",
+    "symfony/security-bundle": "~2.3 | ~3.0"
   },
   "suggest": {
     "scaytrase/symfony-form-extensions": "For key-value collection functional"
