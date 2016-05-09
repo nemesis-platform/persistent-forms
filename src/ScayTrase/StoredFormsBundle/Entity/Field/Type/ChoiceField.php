@@ -128,19 +128,16 @@ class ChoiceField extends AbstractField
             }
 
             if (array_key_exists('optgroup', $row) && $row['optgroup'] !== null) {
-                $choices[$row['optgroup']][$key] = $row['value'];
+                $choices[$row['optgroup']][$row['value']] = $key;
             } else {
-                $choices[$key] = $row['value'];
+                $choices[$row['value']] = $key;
             }
         }
-
-        var_dump($choices);
 
         return array_replace_recursive(
             parent::getRenderedFormOptions(),
             array(
-                'empty_data'        => new ChoiceValue($this, $this->isMultiple() ? [] : null),
-                'choices_as_values' => true,
+                'empty_data'        => new ChoiceValue($this),
                 'choices'           => $choices,
                 'expanded'          => $this->isExpanded(),
                 'multiple'          => $this->isMultiple(),
@@ -154,6 +151,6 @@ class ChoiceField extends AbstractField
      */
     protected function getValueTransformer()
     {
-        return new ValueTransformer(new ChoiceValue($this), 'value');
+        return new ValueTransformer(new ChoiceValue($this));
     }
 }

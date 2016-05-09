@@ -99,7 +99,7 @@ abstract class AbstractField implements FormTypedInterface
         $field = $builder->create($this->name, $this->getRenderedFormType(), $options);
 
         if (null !== ($transformer = $this->getValueTransformer())) {
-            $field->addModelTransformer($transformer);
+            $field->addViewTransformer($transformer);
         }
 
         $builder->add($field);
@@ -176,6 +176,6 @@ abstract class AbstractField implements FormTypedInterface
      */
     protected function getValueTransformer()
     {
-        return new ValueTransformer(new PlainValue($this), 'value');
+        return new ValueTransformer(new PlainValue($this));
     }
 }

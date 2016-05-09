@@ -39,6 +39,9 @@ abstract class AbstractFieldTest extends TypeTestCase
 
         /** @var AbstractValue $value */
         $value = $form->get('test')->getData();
+
+        var_dump($form->getData());
+
         self::assertInstanceOf(AbstractValue::class, $value);
         self::assertSame($expectedData, $value->getValue());
     }

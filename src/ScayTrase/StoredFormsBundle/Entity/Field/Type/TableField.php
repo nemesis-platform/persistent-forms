@@ -93,6 +93,6 @@ class TableField extends AbstractField
      */
     protected function getValueTransformer()
     {
-        return new ValueTransformer(new TableValue($this), 'value');
+        return new ValueTransformer(new TableValue($this));
     }
 }

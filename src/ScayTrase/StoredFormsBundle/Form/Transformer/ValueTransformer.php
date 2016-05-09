@@ -4,7 +4,7 @@ namespace ScayTrase\StoredFormsBundle\Form\Transformer;
 
 use ScayTrase\StoredFormsBundle\Entity\Value\AbstractValue;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
  * Created by PhpStorm.
@@ -16,45 +16,49 @@ class ValueTransformer implements DataTransformerInterface
 {
     /** @var  AbstractValue */
     private $value;
-    /** @var  string */
-    private $propertyPath;
 
     /**
      * ValueTransformer constructor.
      *
      * @param AbstractValue $value
-     * @param string        $propertyPath
      */
-    public function __construct(AbstractValue $value, $propertyPath)
+    public function __construct(AbstractValue $value)
     {
         $this->value        = $value;
-        $this->propertyPath = $propertyPath;
     }
 
     /** @inheritdoc */
-    public function transform($value)
+    public function transform($original)
     {
-        if (!($value instanceof AbstractValue)) {
+        if (null === $original) {
             return null;
         }
 
-        $accessor = new PropertyAccessor();
+        if ([] === $original) {
+            return null;
+        }
 
-        return $accessor->getValue($value, $this->propertyPath);
+        if (!($original instanceof AbstractValue)) {
+            var_dump('original', $original);
+            throw new TransformationFailedException('Not an AbstractValue');
+        }
+
+        $this->value = $original;
+
+        return $this->value->getValue();
     }
 
     /** @inheritdoc */
-    public function reverseTransform($value)
+    public function reverseTransform($submitted)
     {
-        if (null === $value) {
+        var_dump('submitted', $submitted);
+
+        if (null === $submitted) {
             return $this->value;
         }
 
-        $accessor = new PropertyAccessor();
-        $accessor->setValue($this->value, $this->propertyPath, $value);
+        $this->value->setValue($submitted);
 
         return $this->value;
-
     }
-
 }

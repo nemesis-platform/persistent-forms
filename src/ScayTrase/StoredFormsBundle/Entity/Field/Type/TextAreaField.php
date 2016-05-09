@@ -31,6 +31,6 @@ class TextAreaField extends AbstractField
      */
     protected function getValueTransformer()
     {
-        return new ValueTransformer(new TextValue($this), 'textValue');
+        return new ValueTransformer(new TextValue($this));
     }
 }
